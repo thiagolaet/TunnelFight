@@ -1,10 +1,10 @@
-from scripts.nave import *
-from scripts.game_controller import *
+from nave import *
+from game_controller import *
 from PPlay.window import *
 from PPlay.sprite import *
 import time
 
-gc = GameController(1290, 720, 3)
+gc = GameController(800, 600, 3)
 
 janela = Window(gc.width, gc.height)
 
@@ -15,7 +15,7 @@ l_was_pressed = False
 r_was_pressed = False
 
 nave = Nave(gc.size, Sprite("sprites/nave.png"), janela.width, gc)
-nave.sprite.y = janela.height - nave.sprite.height
+nave.sprite.y = janela.height - 10 -  nave.sprite.height
 nave.position_nave()
 
 while True:

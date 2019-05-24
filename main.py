@@ -4,7 +4,7 @@ from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.animation import *
 
-janela = Window(1200, 800)
+janela = Window(1000, 800)
 teclado = janela.get_keyboard()
 janela.set_title("Daft Drunk")    
 
