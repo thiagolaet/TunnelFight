@@ -101,6 +101,7 @@ while True:
             idle_direita.y -= 0.4
             idle_esquerda.y -= 0.4
             andando_direita.y -= 0.4
+            atacando_direita.y -= 0.4
             atacando_esquerda.y -= 0.4
 
     if(teclado.key_pressed("I")):
