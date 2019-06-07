@@ -147,7 +147,7 @@ class Player():
                     else:
                         self.atacarEsquerdaI()
         else:
-            if self.contador > 0.7:
+            if self.contador > 0.68:
                 self.estado = 1
                 self.atacando_direitaI.set_curr_frame(0)
                 self.atacando_esquerdaI.set_curr_frame(0)
