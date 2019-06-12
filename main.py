@@ -13,9 +13,6 @@ janela.set_title("Daft Drunk")
 
 background = Sprite("assets/background.png", 1)
 
-frame_per_SECOND = 60
-speed_per_FRAME = 60
-
 direcao = 1
 #1 = direita / 2 = esquerda
 
@@ -31,6 +28,5 @@ while True:
     background.draw()
     
     checarLimitesJogador()
-
     player.run()
     janela.update()
