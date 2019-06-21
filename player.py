@@ -7,177 +7,137 @@ import globals
 
 class Player():
     def __init__(self, janela):
-        self.idle_direita = Animation("assets/player-idle-right-2.png", 4)
-        self.idle_esquerda = Animation("assets/player-idle-left-2.png", 4)
-        self.andando_direita = Animation("assets/player-walking-right-2.png", 8)
-        self.andando_esquerda = Animation("assets/player-walking-left-2.png", 8)
-        self.atacando_esquerdaI = Animation("assets/player-attack-left-2.png", 9)
-        self.atacando_direitaI = Animation("assets/player-attack-right-2.png", 9)
-        self.atacando_direitaII = Animation("assets/player-attack-right.png", 4)
-        self.atacando_esquerdaII = Animation("assets/player-attack-left.png", 4)
-        self.player = self.idle_direita = Animation("assets/player-idle-right-2.png", 4)
-        self.idle_direita.set_total_duration(800)
-        self.idle_esquerda.set_total_duration(800)
-        self.andando_direita.set_total_duration(800)
-        self.andando_esquerda.set_total_duration(800)
-        self.atacando_direitaI.set_total_duration(800)
-        self.atacando_esquerdaI.set_total_duration(800)
-        self.atacando_direitaII.set_total_duration(800)
-        self.atacando_esquerdaII.set_total_duration(800)
         self.janela = janela
         self.teclado = janela.get_keyboard()
-        self.direcao = 1
-        self.set_pos(100, self.janela.height - 200)
 
-        self.contador = 0
-        #1 - pode fazer tudo / 2 - tem que esperar a animação atual acabar
-        self.estado = 1
-        self.vida = 50
-
-
-    def set_pos(self, x, y):
-        self.player.set_position(x, y)
-        self.atacando_direitaI.set_position(x, y)
-        self.atacando_esquerdaI.set_position(x, y)
-        self.andando_esquerda.set_position(x, y)
-        self.andando_direita.set_position(x, y)
-        self.idle_esquerda.set_position(x, y)
-        self.atacando_direitaII.set_position(x, y)
-        self.atacando_esquerdaII.set_position(x, y)
-
-    def set_pos_y(self, y):
-        self.player.set_position(self.player.x, y)
-        self.atacando_direitaII.set_position(self.player.x, y)
-        self.atacando_esquerdaII.set_position(self.player.x, y)
-        self.atacando_direitaI.set_position(self.player.x, y)
-        self.atacando_esquerdaI.set_position(self.player.x, y)
-        self.andando_esquerda.set_position(self.player.x, y)
-        self.andando_direita.set_position(self.player.x, y)
-        self.idle_esquerda.set_position(self.player.x, y)
-        self.idle_direita.set_position(self.player.x, y)
-
-    def andarDireita(self):
-        self.player = self.andando_direita
-        self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.idle_direita.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.idle_esquerda.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.andando_esquerda.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_esquerdaI.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_direitaI.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_esquerdaII.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_direitaII.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.direcao = 1
-
-    def andarEsquerda(self):
-        self.player = self.andando_esquerda
-        self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.idle_direita.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.idle_esquerda.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.andando_direita.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_esquerdaI.x-= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_direitaI.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_esquerdaII.x-= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.atacando_direitaII.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-        self.direcao = 0
-
-    def idle(self):
-        if(self.direcao == 1):
-            self.player = self.idle_direita
-        elif(self.direcao == 0):
-            self.player = self.idle_esquerda
-
-    def andarDireitaBaixo(self):
-            self.player = self.andando_direita
-            self.player.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_direita.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_esquerda.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.andando_esquerda.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaI.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaI.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaII.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaII.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-    def andarEsquerdaBaixo(self):
-            self.player = self.andando_esquerda
-            self.player.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_direita.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_esquerda.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.andando_direita.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaI.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaI.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaII.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaII.y += 2 * self.janela.delta_time() * globals.frame_per_SECOND
-    def andarDireitaCima(self):
-            self.player = self.andando_direita
-            self.player.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_direita.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_esquerda.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.andando_esquerda.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaI.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaI.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaII.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaII.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-    def andarEsquerdaCima(self):
-            self.player = self.andando_esquerda
-            self.player.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_direita.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.idle_esquerda.y -= 2* self.janela.delta_time() * globals.frame_per_SECOND
-            self.andando_direita.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaI.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaI.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_esquerdaII.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-            self.atacando_direitaII.y -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
-
-    def atacarI(self):
-        if(self.direcao == 1):
-            self.player = self.atacando_direitaI
-        else:
-            self.player = self.atacando_esquerdaI
-        self.estado = 2
-        self.contador = 0
+        self.player = Animation("assets/player-animation-2.png", 50)
+        self.player.set_position(100, self.janela.height - 200)
         
-    def atacarII(self):
-        if(self.direcao == 1):
-            self.player = self.atacando_direitaII
-        else:
-            self.player = self.atacando_esquerdaII
-        self.estado = 2
+        self.player.set_sequence_time(0, 4, 200)    
+        self.player.set_sequence_time(4, 8, 200)
+        self.player.set_sequence_time(8, 16, 120)
+        self.player.set_sequence_time(16, 24, 120)
+        
+        #1 = direita / 2 = esquerda
+        self.direcao = 1
+
+        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3 - jumpRight / 3.5 - jumpLeft / 4 - attack1 / 5 - attack2 / 6 - attack3 / 7 - attack4  
+        self.player_state = 1
         self.contador = 0
+        self.player.set_sequence(0, 4)
+
+
+    def idleRight(self):
+        if self.player_state != 1:
+            self.player.set_sequence(0, 4)
+            self.player_state = 1
+
+    def idleLeft(self):
+        if self.player_state != 1.5:
+            self.player.set_sequence(4, 8)
+            self.player_state = 1.5
+
+    def walkRight(self):
+        if self.player_state != 2: 
+            self.player.set_sequence(8, 16)
+            self.player_state = 2
+            self.player.y -= 0.2
+            self.player.y += 0.2
+        self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 1
+
+    def walkRightUp(self):
+        if self.player_state != 2: 
+            self.player.set_sequence(8, 16)
+            self.player_state = 2
+        self.player.y -= 0.2        
+        self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 1
+
+    def walkRightDown(self):
+        if self.player_state != 2: 
+            self.player.set_sequence(8, 16)
+            self.player_state = 2
+        self.player.y += 0.2
+        self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 1
+
+    def walkLeft(self):
+        if self.player_state != 2.5:
+            self.player.set_sequence(16, 24)
+            self.player_state = 2.5
+        self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 2
     
+    def walkLeftUp(self):
+        if self.player_state != 2.5:
+            self.player.set_sequence(16, 24)
+            self.player_state = 2.5
+        self.player.y -= 0.2
+        self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 2
+
+    def walkLeftDown(self):
+        if self.player_state != 2.5:
+            self.player.set_sequence(16, 24)
+            self.player_state = 2.5
+        self.player.y += 0.2
+        self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.direcao = 2
+
+    def walkUp(self):
+        if self.direcao == 1:
+            self.player.y -= 0.2
+            if self.player_state != 2: 
+                self.player.set_sequence(8, 16)
+                self.player_state = 2
+        if self.direcao == 2:
+            self.player.y -= 0.2
+            if self.player_state != 2.5: 
+                self.player.set_sequence(16, 24)
+                self.player_state = 2.5
+
+    def walkDown(self):
+        if self.direcao == 1:
+            self.player.y += 0.2
+            if self.player_state != 2: 
+                self.player.set_sequence(8, 16)
+                self.player_state = 2
+        if self.direcao == 2:
+            self.player.y += 0.2
+            if self.player_state != 2.5: 
+                self.player.set_sequence(16, 24)
+                self.player_state = 2.5
+
     def run(self):
-        self.player.draw()
-        self.player.update()
-        if self.estado != 2:
-            if(self.teclado.key_pressed("D")):
-                self.andarDireita()
-            elif(self.teclado.key_pressed("A")):
-                self.andarEsquerda()
-            else: 
-                self.idle()
+        
+        if(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
+            self.walkRightUp()
+        elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("S")):
+            self.walkRightDown()
+        elif(self.teclado.key_pressed("D")):
+            self.walkRight()
 
-            if(self.teclado.key_pressed("S")):
-                if(self.direcao == 1):
-                    self.andarDireitaBaixo()
-                else:
-                    self.andarEsquerdaBaixo()
+        elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("W")):
+            self.walkLeftUp()
+        elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("S")):
+            self.walkLeftDown()
+        elif(self.teclado.key_pressed("A")):
+            self.walkLeft()
 
-            if(self.teclado.key_pressed("W")):
-                if(self.direcao == 1):
-                    self.andarDireitaCima()
-                else:
-                    self.andarEsquerdaCima()
-            
-            if(self.contador > 0.20):
-                if(self.teclado.key_pressed("I")):
-                    self.atacarI()
-                if(self.teclado.key_pressed("J")):
-                    self.atacarII()
+        elif(self.teclado.key_pressed("W")):
+            self.walkUp()
+
+        elif(self.teclado.key_pressed("S")):
+            self.walkDown()
+
         else:
-            if self.contador > 0.68:
-                self.estado = 1
-                self.atacando_direitaI.set_curr_frame(0)
-                self.atacando_esquerdaI.set_curr_frame(0)
-                self.atacando_direitaII.set_curr_frame(0)
-                self.atacando_esquerdaII.set_curr_frame(0)
-                self.contador = 0
+            if self.direcao == 1:
+                self.idleRight()
+            elif self.direcao == 2:
+                self.idleLeft()
 
+        self.player.draw()
+        self.player.play()
+        self.player.update()
         self.contador += self.janela.delta_time()
