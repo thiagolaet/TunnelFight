@@ -114,11 +114,13 @@ class Player():
         if self.direcao == 1:
             if self.player_state != 3:
                 self.player.set_sequence(24, 28)
+                self.player.set_curr_frame(24)
                 self.player_state = 3
                 self.contador = 0
         elif self.direcao == 2:
             if self.player_state != 3.5:
                 self.player.set_sequence(28, 32)
+                self.player.set_curr_frame(28)
                 self.player_state = 3.5
                 self.contador = 0
 
