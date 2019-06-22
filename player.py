@@ -10,22 +10,23 @@ class Player():
         self.janela = janela
         self.teclado = janela.get_keyboard()
 
-        self.player = Animation("assets/player-animation-2.png", 50)
+        self.player = Animation("assets/player-animation-2.png", 54)
         self.player.set_position(100, self.janela.height - 200)
         
         self.player.set_sequence_time(0, 4, 200)    
         self.player.set_sequence_time(4, 8, 200)
         self.player.set_sequence_time(8, 16, 120)
         self.player.set_sequence_time(16, 24, 120)
+        self.player.set_sequence_time(24, 28, 200)
+        self.player.set_sequence_time(28, 32, 200)
         
         #1 = direita / 2 = esquerda
         self.direcao = 1
 
-        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3 - jumpRight / 3.5 - jumpLeft / 4 - attack1 / 5 - attack2 / 6 - attack3 / 7 - attack4  
+        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 4 - attack1 / 5 - attack2 / 6 - attack3 / 7 - attack4  
         self.player_state = 1
         self.contador = 0
         self.player.set_sequence(0, 4)
-
 
     def idleRight(self):
         if self.player_state != 1:
@@ -109,34 +110,68 @@ class Player():
                 self.player.set_sequence(16, 24)
                 self.player_state = 2.5
 
+    def weakPunch(self):
+        if self.direcao == 1:
+            if self.player_state != 3:
+                self.player.set_sequence(24, 28)
+                self.player_state = 3
+                self.contador = 0
+        elif self.direcao == 2:
+            if self.player_state != 3.5:
+                self.player.set_sequence(28, 32)
+                self.player_state = 3.5
+                self.contador = 0
+
+    #def strongPungh(self):
+
+    #def weakKick(self):
+
+    #def strongKick(self):
+
+    def checarContador(self):
+        if self.player_state == 3 or self.player_state == 3.5:
+            return 1.2
+        else: return 0
+
     def run(self):
         
-        if(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
-            self.walkRightUp()
-        elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("S")):
-            self.walkRightDown()
-        elif(self.teclado.key_pressed("D")):
-            self.walkRight()
+        tempoContador = self.checarContador()
 
-        elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("W")):
-            self.walkLeftUp()
-        elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("S")):
-            self.walkLeftDown()
-        elif(self.teclado.key_pressed("A")):
-            self.walkLeft()
+        if self.contador >= tempoContador:
+            # I - Soco forte / L - Chute Duplo / J - Soco fraco / K - Chute normal
+            if(self.teclado.key_pressed("J")):
+                self.weakPunch()
+            #elif(self.teclado.key_pressed("L")):
 
-        elif(self.teclado.key_pressed("W")):
-            self.walkUp()
+            #elif(self.teclado.key_pressed("J")):
 
-        elif(self.teclado.key_pressed("S")):
-            self.walkDown()
+            #elif(self.teclado.key_pressed("K")):
 
-        else:
-            if self.direcao == 1:
-                self.idleRight()
-            elif self.direcao == 2:
-                self.idleLeft()
+            #Movimentação Básica
+            elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
+                self.walkRightUp()
+            elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("S")):
+                self.walkRightDown()
+            elif(self.teclado.key_pressed("D")):
+                self.walkRight()
+            elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("W")):
+                self.walkLeftUp()
+            elif(self.teclado.key_pressed("A") and self.teclado.key_pressed("S")):
+                self.walkLeftDown()
+            elif(self.teclado.key_pressed("A")):
+                self.walkLeft()
+            elif(self.teclado.key_pressed("W")):
+                self.walkUp()
+            elif(self.teclado.key_pressed("S")):
+                self.walkDown()
+            else:
+                if self.direcao == 1:
+                    self.idleRight()
+                elif self.direcao == 2:
+                    self.idleLeft()
 
+
+        self.contador += self.janela.delta_time()
         self.player.draw()
         self.player.play()
         self.player.update()
