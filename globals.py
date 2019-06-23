@@ -1,4 +1,4 @@
-WIDTH = 800
+WIDTH = 1000
 HEIGHT = 600
 
 frame_per_SECOND = 60

@@ -10,7 +10,9 @@ janela = Window(globals.WIDTH, globals.HEIGHT)
 teclado = janela.get_keyboard()
 janela.set_title("Daft Drunk")    
 
-background = Sprite("assets/background.png", 1)
+fase = 1
+
+background = Sprite("assets/bg-1.png", 1)
 player = Player(janela)
 
 while True:

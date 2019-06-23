@@ -12,11 +12,22 @@ class Player():
 
         self.player = Animation("assets/player-animation-2.png", 76)
         self.player.set_position(100, self.janela.height - 200)
+        self._set_seq_time()
         
+        #1 = direita / 2 = esquerda
+        self.direcao = 1
+
+        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3 3.5 - attack1 / 4 4.5 - attack2 / 5 5.5 - attack3 / 6 6.5 - attack4  
+        self.player_state = 1
+        self.contador = 0
+        self.player.set_sequence(0, 4)
+
+
+    def _set_seq_time(self):
         self.player.set_sequence_time(0, 4, 200)    
         self.player.set_sequence_time(4, 8, 200)
-        self.player.set_sequence_time(8, 16, 120)
-        self.player.set_sequence_time(16, 24, 120)
+        self.player.set_sequence_time(8, 16, 100)
+        self.player.set_sequence_time(16, 24, 100)
         self.player.set_sequence_time(24, 28, 220)
         self.player.set_sequence_time(28, 32, 220)
         self.player.set_sequence_time(32, 37, 150)
@@ -25,15 +36,6 @@ class Player():
         self.player.set_sequence_time(51, 60, 120)
         self.player.set_sequence_time(60, 68, 120)
         self.player.set_sequence_time(68, 76, 120)
-
-        
-        #1 = direita / 2 = esquerda
-        self.direcao = 1
-
-        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3,3.5 - attack1 / 4,4.5 - attack2 / 5,5.5 - attack3 / 6,6.5 - attack4  
-        self.player_state = 1
-        self.contador = 0
-        self.player.set_sequence(0, 4)
 
     def idleRight(self):
         if self.player_state != 1:
