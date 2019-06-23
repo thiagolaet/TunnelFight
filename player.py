@@ -10,20 +10,27 @@ class Player():
         self.janela = janela
         self.teclado = janela.get_keyboard()
 
-        self.player = Animation("assets/player-animation-2.png", 54)
+        self.player = Animation("assets/player-animation-2.png", 76)
         self.player.set_position(100, self.janela.height - 200)
         
         self.player.set_sequence_time(0, 4, 200)    
         self.player.set_sequence_time(4, 8, 200)
         self.player.set_sequence_time(8, 16, 120)
         self.player.set_sequence_time(16, 24, 120)
-        self.player.set_sequence_time(24, 28, 200)
-        self.player.set_sequence_time(28, 32, 200)
+        self.player.set_sequence_time(24, 28, 220)
+        self.player.set_sequence_time(28, 32, 220)
+        self.player.set_sequence_time(32, 37, 150)
+        self.player.set_sequence_time(37, 42, 150)
+        self.player.set_sequence_time(42, 51, 120)
+        self.player.set_sequence_time(51, 60, 120)
+        self.player.set_sequence_time(60, 68, 120)
+        self.player.set_sequence_time(68, 76, 120)
+
         
         #1 = direita / 2 = esquerda
         self.direcao = 1
 
-        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 4 - attack1 / 5 - attack2 / 6 - attack3 / 7 - attack4  
+        #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3,3.5 - attack1 / 4,4.5 - attack2 / 5,5.5 - attack3 / 6,6.5 - attack4  
         self.player_state = 1
         self.contador = 0
         self.player.set_sequence(0, 4)
@@ -124,15 +131,58 @@ class Player():
                 self.player_state = 3.5
                 self.contador = 0
 
-    #def strongPungh(self):
+    def weakKick(self):
+        if self.direcao == 1:
+            if self.player_state != 4:
+                self.player.set_sequence(32, 37)
+                self.player.set_curr_frame(32)
+                self.player_state = 4
+                self.contador = 0
+        elif self.direcao == 2:
+            if self.player_state != 4.5:
+                self.player.set_sequence(37, 42)
+                self.player.set_curr_frame(37)
+                self.player_state = 4.5
+                self.contador = 0
 
-    #def weakKick(self):
+    def strongPunch(self):
+        if self.direcao == 1:
+            if self.player_state != 5:
+                self.player.set_sequence(42, 51)
+                self.player.set_curr_frame(42)
+                self.player_state = 5
+                self.contador = 0
+        elif self.direcao == 2:
+            if self.player_state != 5.5:
+                self.player.set_sequence(51, 60)
+                self.player.set_curr_frame(51)
+                self.player_state = 5.5
+                self.contador = 0
 
-    #def strongKick(self):
+    def strongKick(self):
+        if self.direcao == 1:
+            if self.player_state != 6:
+                self.player.set_sequence(60, 68)
+                self.player.set_curr_frame(60)
+                self.player_state = 6
+                self.contador = 0
+        elif self.direcao == 2:
+            if self.player_state != 6.5:
+                self.player.set_sequence(68, 76)
+                self.player.set_curr_frame(68)
+                self.player_state = 6.5
+                self.contador = 0
+
 
     def checarContador(self):
         if self.player_state == 3 or self.player_state == 3.5:
-            return 1.2
+            return 1.4
+        elif self.player_state == 4 or self.player_state == 4.5:
+            return 1.4
+        elif self.player_state == 5 or self.player_state == 5.5:
+            return 1.9
+        elif self.player_state == 6 or self.player_state == 6.5:
+            return 1.9        
         else: return 0
 
     def run(self):
@@ -143,11 +193,12 @@ class Player():
             # I - Soco forte / L - Chute Duplo / J - Soco fraco / K - Chute normal
             if(self.teclado.key_pressed("J")):
                 self.weakPunch()
-            #elif(self.teclado.key_pressed("L")):
-
-            #elif(self.teclado.key_pressed("J")):
-
-            #elif(self.teclado.key_pressed("K")):
+            elif(self.teclado.key_pressed("L")):
+                self.weakKick()
+            elif(self.teclado.key_pressed("K")):
+                self.strongPunch()
+            elif(self.teclado.key_pressed("I")):
+                self.strongKick()
 
             #Movimentação Básica
             elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
