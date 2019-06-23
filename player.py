@@ -11,7 +11,7 @@ class Player():
         self.teclado = janela.get_keyboard()
 
         self.player = Animation("assets/player-animation-2.png", 76)
-        self.player.set_position(100, self.janela.height - 200)
+        self.player.set_position(100, 360)
         self._set_seq_time()
         
         #1 = direita / 2 = esquerda
@@ -19,7 +19,7 @@ class Player():
 
         #1 - idleRight / 1.5 - idleLeft / 2 - walkRight / 2.5 - walkLeft / 3 3.5 - attack1 / 4 4.5 - attack2 / 5 5.5 - attack3 / 6 6.5 - attack4  
         self.player_state = 1
-        self.contador = 0
+        self.contadorAnimacao = 0
         self.player.set_sequence(0, 4)
 
 
@@ -125,13 +125,13 @@ class Player():
                 self.player.set_sequence(24, 28)
                 self.player.set_curr_frame(24)
                 self.player_state = 3
-                self.contador = 0
+                self.contadorAnimacao = 0
         elif self.direcao == 2:
             if self.player_state != 3.5:
                 self.player.set_sequence(28, 32)
                 self.player.set_curr_frame(28)
                 self.player_state = 3.5
-                self.contador = 0
+                self.contadorAnimacao = 0
 
     def weakKick(self):
         if self.direcao == 1:
@@ -139,13 +139,13 @@ class Player():
                 self.player.set_sequence(32, 37)
                 self.player.set_curr_frame(32)
                 self.player_state = 4
-                self.contador = 0
+                self.contadorAnimacao = 0
         elif self.direcao == 2:
             if self.player_state != 4.5:
                 self.player.set_sequence(37, 42)
                 self.player.set_curr_frame(37)
                 self.player_state = 4.5
-                self.contador = 0
+                self.contadorAnimacao = 0
 
     def strongPunch(self):
         if self.direcao == 1:
@@ -153,13 +153,13 @@ class Player():
                 self.player.set_sequence(42, 51)
                 self.player.set_curr_frame(42)
                 self.player_state = 5
-                self.contador = 0
+                self.contadorAnimacao = 0
         elif self.direcao == 2:
             if self.player_state != 5.5:
                 self.player.set_sequence(51, 60)
                 self.player.set_curr_frame(51)
                 self.player_state = 5.5
-                self.contador = 0
+                self.contadorAnimacao = 0
 
     def strongKick(self):
         if self.direcao == 1:
@@ -167,16 +167,15 @@ class Player():
                 self.player.set_sequence(60, 68)
                 self.player.set_curr_frame(60)
                 self.player_state = 6
-                self.contador = 0
+                self.contadorAnimacao = 0
         elif self.direcao == 2:
             if self.player_state != 6.5:
                 self.player.set_sequence(68, 76)
                 self.player.set_curr_frame(68)
                 self.player_state = 6.5
-                self.contador = 0
+                self.contadorAnimacao = 0
 
-
-    def checarContador(self):
+    def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
             return 1.4
         elif self.player_state == 4 or self.player_state == 4.5:
@@ -189,9 +188,9 @@ class Player():
 
     def run(self):
         
-        tempoContador = self.checarContador()
+        tempocontadorAnimacao = self.checarcontadorAnimacao()
 
-        if self.contador >= tempoContador:
+        if self.contadorAnimacao >= tempocontadorAnimacao:
             # I - Soco forte / L - Chute Duplo / J - Soco fraco / K - Chute normal
             if(self.teclado.key_pressed("J")):
                 self.weakPunch()
@@ -226,8 +225,8 @@ class Player():
                     self.idleLeft()
 
 
-        self.contador += self.janela.delta_time()
+        self.contadorAnimacao += self.janela.delta_time()
         self.player.draw()
         self.player.play()
         self.player.update()
-        self.contador += self.janela.delta_time()
+        self.contadorAnimacao += self.janela.delta_time()
