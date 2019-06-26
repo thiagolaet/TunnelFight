@@ -10,7 +10,7 @@ class Player():
         self.janela = janela
         self.teclado = janela.get_keyboard()
 
-        self.player = Animation("assets/player-animation-2.png", 76)
+        self.player = Animation("assets/player-animation-2.png", 77)
         self.player.set_position(100, 360)
         self._set_seq_time()
         
@@ -28,14 +28,17 @@ class Player():
         self.player.set_sequence_time(4, 8, 200)
         self.player.set_sequence_time(8, 16, 100)
         self.player.set_sequence_time(16, 24, 100)
-        self.player.set_sequence_time(24, 28, 220)
-        self.player.set_sequence_time(28, 32, 220)
-        self.player.set_sequence_time(32, 37, 150)
-        self.player.set_sequence_time(37, 42, 150)
-        self.player.set_sequence_time(42, 51, 120)
-        self.player.set_sequence_time(51, 60, 120)
-        self.player.set_sequence_time(60, 68, 120)
-        self.player.set_sequence_time(68, 76, 120)
+        self.player.set_sequence_time(24, 28, 120)
+        self.player.set_sequence_time(28, 32, 120)
+        self.player.set_sequence_time(32, 37, 120)
+        self.player.set_sequence_time(37, 42, 120)
+        self.player.set_sequence_time(42, 50, 100)
+        self.player.set_sequence_time(50, 58, 100)
+        self.player.set_sequence_time(59, 61, 120)
+        self.player.set_sequence_time(61, 64, 120)
+        self.player.set_sequence_time(64, 70, 150)
+        self.player.set_sequence_time(70, 77, 150)
+
 
     def idleRight(self):
         if self.player_state != 1:
@@ -147,43 +150,27 @@ class Player():
                 self.player_state = 4.5
                 self.contadorAnimacao = 0
 
-    def strongPunch(self):
+    def strongKick(self):
         if self.direcao == 1:
-            if self.player_state != 5:
-                self.player.set_sequence(42, 51)
+            if self.player_state != 6:
+                self.player.set_sequence(42, 50)
                 self.player.set_curr_frame(42)
                 self.player_state = 5
                 self.contadorAnimacao = 0
         elif self.direcao == 2:
-            if self.player_state != 5.5:
-                self.player.set_sequence(51, 60)
-                self.player.set_curr_frame(51)
-                self.player_state = 5.5
-                self.contadorAnimacao = 0
-
-    def strongKick(self):
-        if self.direcao == 1:
-            if self.player_state != 6:
-                self.player.set_sequence(60, 68)
-                self.player.set_curr_frame(60)
-                self.player_state = 6
-                self.contadorAnimacao = 0
-        elif self.direcao == 2:
             if self.player_state != 6.5:
-                self.player.set_sequence(68, 76)
-                self.player.set_curr_frame(68)
-                self.player_state = 6.5
+                self.player.set_sequence(50, 58)
+                self.player.set_curr_frame(50)
+                self.player_state = 5.5
                 self.contadorAnimacao = 0
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
-            return 1.4
+            return 0.6
         elif self.player_state == 4 or self.player_state == 4.5:
-            return 1.4
+            return 0.9
         elif self.player_state == 5 or self.player_state == 5.5:
-            return 1.9
-        elif self.player_state == 6 or self.player_state == 6.5:
-            return 1.9        
+            return 1.6
         else: return 0
 
     def run(self):
@@ -191,14 +178,12 @@ class Player():
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:
-            # I - Soco forte / L - Chute Duplo / J - Soco fraco / K - Chute normal
+            #K - Chute Duplo / J - Soco fraco / K - Chute normal
             if(self.teclado.key_pressed("J")):
                 self.weakPunch()
             elif(self.teclado.key_pressed("L")):
                 self.weakKick()
             elif(self.teclado.key_pressed("K")):
-                self.strongPunch()
-            elif(self.teclado.key_pressed("I")):
                 self.strongKick()
 
             #Movimentação Básica
