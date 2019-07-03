@@ -4,6 +4,7 @@ from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.animation import *
 import globals
+from life import*
 
 class Player():
     def __init__(self, janela):
@@ -21,6 +22,9 @@ class Player():
         self.player_state = 1
         self.contadorAnimacao = 0
         self.player.set_sequence(0, 4)
+
+        #sistema de vida
+        self.life = Life()
 
 
     def _set_seq_time(self):
@@ -122,7 +126,7 @@ class Player():
                 self.player.set_sequence(16, 24)
                 self.player_state = 2.5
 
-    def weakPunch(self):
+    def weakPunch(self, enemies):
         if self.direcao == 1:
             if self.player_state != 3:
                 self.player.set_sequence(24, 28)
@@ -136,7 +140,10 @@ class Player():
                 self.player_state = 3.5
                 self.contadorAnimacao = 0
 
-    def weakKick(self):
+        for a in enemies:
+            a.life.receive_damage(20)
+
+    def weakKick(self, enemies):
         if self.direcao == 1:
             if self.player_state != 4:
                 self.player.set_sequence(32, 37)
@@ -149,8 +156,11 @@ class Player():
                 self.player.set_curr_frame(37)
                 self.player_state = 4.5
                 self.contadorAnimacao = 0
+        for a in enemies:
+            a.life.receive_damage(30)
 
-    def strongKick(self):
+
+    def strongKick(self, enemies):
         if self.direcao == 1:
             if self.player_state != 6:
                 self.player.set_sequence(42, 50)
@@ -163,6 +173,8 @@ class Player():
                 self.player.set_curr_frame(50)
                 self.player_state = 5.5
                 self.contadorAnimacao = 0
+        for a in enemies:
+            a.life.receive_damage(50)
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
