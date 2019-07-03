@@ -13,11 +13,11 @@ class Jogo(object):
         self.janela = janela
         self.teclado = janela.get_keyboard()
         self.player = Player(self.janela)
-        self.enemyController = Enemy_Controller(3, self.janela, self.player)
+        self.enemyController = Enemy_Controller(1, self.janela, self.player)
         self.background = Sprite("assets/bg-fase1.png", 1)
         self.vidaHud = Animation("assets/vida_hud.png", 11)
-        self.vida = 75
-        self.pontuacao = 250000
+        self.vida = self.player.life.currentLife
+        self.pontuacao = 0
         self.wave = 0
         self.set_pos()
 
@@ -61,4 +61,5 @@ class Jogo(object):
             globals.GAME_STATE = 1
         self.atualizaHudVida()
         self._draw()
+        self.enemyController.run()
         self.player.run()

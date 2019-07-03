@@ -28,6 +28,5 @@ class Enemy_Controller():
 
     def run(self):
         self.draw()
-        self.checar_iguais()
         for a in self.enemyList:
             a.run(self.player)

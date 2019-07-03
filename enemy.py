@@ -9,9 +9,10 @@ import globals
 
 
 class Enemy1():
-    def __init__(self, janela, enemy, x, y):
+    def __init__(self, janela, player, x, y):
         self.janela = janela
-        self.enemy = enemy
+        self.player = player
+        self.teclado = janela.get_keyboard()
 
         self.enemy = Animation("assets/enemy1-medium.png", 70)
         self.enemy.set_position(x, y)
@@ -135,59 +136,48 @@ class Enemy1():
                 self.enemy.set_sequence(20, 25)
                 self.enemy.set_curr_frame(20)
                 self.enemy_state = 3
-                self.contadorAnimacao = 0
         elif self.direcao == 2:
             if self.enemy_state != 3.5:
                 self.enemy.set_sequence(25, 30)
                 self.enemy.set_curr_frame(25)
                 self.enemy_state = 3.5
-                self.contadorAnimacao = 0
 
+        self.contadorAnimacao = 0
         player.life.receive_damage(10)
 
     def follow_target(self, target):
-        self.canWalk = True
-        if self.enemy.collided(target.player):
-            self.canWalk = False
-        if self.canWalk:
-            if target.player.x < self.enemy.x:
-                self.walkLeft()
-            elif target.player.x > self.enemy.x:
-                self.walkRight()
+        if target.player.x < self.enemy.x:
+            self.direcao = 2
+        elif target.player.x > self.enemy.x:
+            self.direcao = 1
+        tempocontadorAnimacao = self.checarcontadorAnimacao()       
+        if(self.contadorAnimacao > tempocontadorAnimacao):
+            self.canWalk = True
+            if self.enemy.collided(target.player):
+                self.canWalk = False
+            if self.canWalk:
+                if self.direcao == 2:
+                    self.walkLeft()
+                elif self.direcao == 1:
+                    self.walkRight()
 
-            if target.player.y < self.enemy.y:
-                self.walkUp()
-            elif target.player.y > self.enemy.y:
-                self.walkDown()
-        else:
-            self.attack(target)
-
-
-
+                if target.player.y < self.enemy.y:
+                    self.walkUp()
+                elif target.player.y > self.enemy.y:
+                    self.walkDown()
+            else:
+                self.attack(target)
 
     def checarcontadorAnimacao(self):
         if self.enemy_state == 3 or self.enemy_state == 3.5:
-            return 1.4
-        elif self.enemy_state == 4 or self.enemy_state == 4.5:
-            return 1.4
-        elif self.enemy_state == 5 or self.enemy_state == 5.5:
-            return 1.9
-        elif self.enemy_state == 6 or self.enemy_state == 6.5:
-            return 1.9        
-        else: return 0
+            return 1
+        return 0
+        
 
     def run(self, player):
-        tempocontadorAnimacao = self.checarcontadorAnimacao()
-
-        if self.contadorAnimacao >= tempocontadorAnimacao:
-            if self.direcao == 1:
-                self.idleRight()
-            elif self.direcao == 2:
-                self.idleLeft()
-
-        self.follow_target(player)
-        self.contadorAnimacao += self.janela.delta_time()
         self.enemy.draw()
-        self.enemy.play()
         self.enemy.update()
+        self.follow_target(self.player)
         self.contadorAnimacao += self.janela.delta_time()
+        print(self.player.life.currentLife)
+        print(self.contadorAnimacao)
