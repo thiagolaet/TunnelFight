@@ -162,6 +162,9 @@ class Enemy1():
         else:
             self.attack(target)
 
+
+
+
     def checarcontadorAnimacao(self):
         if self.enemy_state == 3 or self.enemy_state == 3.5:
             return 1.4
@@ -176,11 +179,11 @@ class Enemy1():
     def run(self, player):
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
-        '''if self.contadorAnimacao >= tempocontadorAnimacao:
+        if self.contadorAnimacao >= tempocontadorAnimacao:
             if self.direcao == 1:
                 self.idleRight()
             elif self.direcao == 2:
-                self.idleLeft()'''
+                self.idleLeft()
 
         self.follow_target(player)
         self.contadorAnimacao += self.janela.delta_time()
