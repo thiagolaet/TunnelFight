@@ -28,8 +28,8 @@ class Player():
 
 
     def _set_seq_time(self):
-        self.player.set_sequence_time(0, 4, 200)    
-        self.player.set_sequence_time(4, 8, 200)
+        self.player.set_sequence_time(0, 4, 130)    
+        self.player.set_sequence_time(4, 8, 130)
         self.player.set_sequence_time(8, 16, 100)
         self.player.set_sequence_time(16, 24, 100)
         self.player.set_sequence_time(24, 28, 120)
