@@ -2,6 +2,7 @@ from PPlay.window import *
 from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.animation import *
+from life import *
 import globals
 
 #class Enemys():
@@ -15,6 +16,10 @@ class Enemy1():
         self.enemy = Animation("assets/enemy1-medium.png", 70)
         self.enemy.set_position(x, y)
         self._set_seq_time()
+
+        #sistema de vida
+        self.life = Life()
+
         
         #1 = direita / 2 = esquerda
         self.direcao = 2
@@ -23,6 +28,9 @@ class Enemy1():
         self.enemy_state = 1
         self.contadorAnimacao = 0
         self.enemy.set_sequence(0, 4)
+
+        #pode andar
+        self.canWalk = True
 
 
     def _set_seq_time(self):
@@ -39,6 +47,9 @@ class Enemy1():
         self.enemy.set_sequence_time(42, 56, 200) #die
         self.enemy.set_sequence_time(56, 69, 200) #die
 
+    def draw(self):
+        self.enemy.draw()
+
     def idleRight(self):
         if self.enemy_state != 1:
             self.enemy.set_sequence(0, 4)
@@ -53,75 +64,75 @@ class Enemy1():
         if self.enemy_state != 2: 
             self.enemy.set_sequence(8, 14)
             self.enemy_state = 2
-            self.enemy.y -= 0.2
-            self.enemy.y += 0.2
-        self.enemy.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+            self.enemy.y -= 0.1
+            self.enemy.y += 0.1
+        self.enemy.x += 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
     def walkRightUp(self):
         if self.enemy_state != 2: 
             self.enemy.set_sequence(8, 14)
             self.enemy_state = 2
-        self.enemy.y -= 0.2        
-        self.enemy.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.enemy.y -= 0.1
+        self.enemy.x += 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
     def walkRightDown(self):
         if self.enemy_state != 2: 
             self.enemy.set_sequence(8, 14)
             self.enemy_state = 2
-        self.enemy.y += 0.2
-        self.enemy.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.enemy.y += 0.1
+        self.enemy.x += 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
     def walkLeft(self):
         if self.enemy_state != 2.5:
             self.enemy.set_sequence(14, 20)
             self.enemy_state = 2.5
-        self.enemy.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.enemy.x -= 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 2
     
     def walkLeftUp(self):
         if self.enemy_state != 2.5:
             self.enemy.set_sequence(14, 20)
             self.enemy_state = 2.5
-        self.enemy.y -= 0.2
-        self.enemy.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.enemy.y -= 0.1
+        self.enemy.x -= 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 2
 
     def walkLeftDown(self):
         if self.enemy_state != 2.5:
             self.enemy.set_sequence(14, 20)
             self.enemy_state = 2.5
-        self.enemy.y += 0.2
-        self.enemy.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
+        self.enemy.y += 0.1
+        self.enemy.x -= 1 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 2
 
     def walkUp(self):
         if self.direcao == 1:
-            self.enemy.y -= 0.2
+            self.enemy.y -= 0.1
             if self.enemy_state != 2: 
                 self.enemy.set_sequence(8, 14)
                 self.enemy_state = 2
         if self.direcao == 2:
-            self.enemy.y -= 0.2
+            self.enemy.y -= 0.1
             if self.enemy_state != 2.5: 
                 self.enemy.set_sequence(14, 20)
                 self.enemy_state = 2.5
 
     def walkDown(self):
         if self.direcao == 1:
-            self.enemy.y += 0.2
+            self.enemy.y += 0.1
             if self.enemy_state != 2: 
                 self.enemy.set_sequence(8, 14)
                 self.enemy_state = 2
         if self.direcao == 2:
-            self.enemy.y += 0.2
+            self.enemy.y += 0.1
             if self.enemy_state != 2.5: 
                 self.enemy.set_sequence(14, 20)
                 self.enemy_state = 2.5
 
-    def attack(self):
+    def attack(self, player):
         if self.direcao == 1:
             if self.enemy_state != 3:
                 self.enemy.set_sequence(20, 25)
@@ -135,6 +146,28 @@ class Enemy1():
                 self.enemy_state = 3.5
                 self.contadorAnimacao = 0
 
+        player.life.receive_damage(10)
+
+    def follow_target(self, target):
+        self.canWalk = True
+        if self.enemy.collided(target.player):
+            self.canWalk = False
+        if self.canWalk:
+            if target.player.x < self.enemy.x:
+                self.walkLeft()
+            elif target.player.x > self.enemy.x:
+                self.walkRight()
+
+            if target.player.y < self.enemy.y:
+                self.walkUp()
+            elif target.player.y > self.enemy.y:
+                self.walkDown()
+        else:
+            self.attack(target)
+
+
+
+
     def checarcontadorAnimacao(self):
         if self.enemy_state == 3 or self.enemy_state == 3.5:
             return 1.4
@@ -146,7 +179,7 @@ class Enemy1():
             return 1.9        
         else: return 0
 
-    def run(self):
+    def run(self, player):
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:
@@ -155,8 +188,12 @@ class Enemy1():
             elif self.direcao == 2:
                 self.idleLeft()
 
+        if not self.life.alive:
+            print("Ai papai murri")
+
+        self.follow_target(player)
         self.contadorAnimacao += self.janela.delta_time()
-        self.enemy.draw()
+        #self.enemy.draw()
         self.enemy.play()
         self.enemy.update()
         self.contadorAnimacao += self.janela.delta_time()

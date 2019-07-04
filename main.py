@@ -5,6 +5,8 @@ from PPlay.gameobject import *
 from PPlay.animation import *
 from player import Player
 from enemy import Enemy1
+from enemy_controller import*
+from game_controller import*
 import globals
 
 janela = Window(globals.WIDTH, globals.HEIGHT)
@@ -20,15 +22,14 @@ enemy2 = Enemy1(janela, player, 600, 390)
 enemy3 = Enemy1(janela, player, 800, 390)
 enemy4 = Enemy1(janela, player, 700, 440)
 
+enemy_controller = Enemy_Controller(4, janela, player)
+gc = GameController(player, enemy_controller)
 
 
 while True:
     background.draw()
     #checarLimitesJogador()
-    enemy1.run()
-    enemy2.run()
-    enemy3.run()
-    enemy4.run()
     player.run()
-
+    enemy_controller.run()
+    gc.run()
     janela.update()

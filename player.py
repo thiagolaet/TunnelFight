@@ -4,6 +4,7 @@ from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.animation import *
 import globals
+from life import*
 
 class Player():
     def __init__(self, janela):
@@ -22,6 +23,12 @@ class Player():
         self.contadorAnimacao = 0
         self.player.set_sequence(0, 4)
 
+        #sistema de vida
+        self.life = Life()
+
+        #inimgos que tomarão dano no próximo ataque
+        self.enemy_list = []
+
 
     def _set_seq_time(self):
         self.player.set_sequence_time(0, 4, 200)    
@@ -39,6 +46,9 @@ class Player():
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 77, 150)
 
+
+    def draw(self):
+        self.player.draw()
 
     def idleRight(self):
         if self.player_state != 1:
@@ -136,6 +146,9 @@ class Player():
                 self.player_state = 3.5
                 self.contadorAnimacao = 0
 
+        for a in self.enemy_list:
+            a.life.receive_damage(20)
+
     def weakKick(self):
         if self.direcao == 1:
             if self.player_state != 4:
@@ -149,6 +162,9 @@ class Player():
                 self.player.set_curr_frame(37)
                 self.player_state = 4.5
                 self.contadorAnimacao = 0
+        for a in self.enemy_list:
+            a.life.receive_damage(30)
+
 
     def strongKick(self):
         if self.direcao == 1:
@@ -163,6 +179,8 @@ class Player():
                 self.player.set_curr_frame(50)
                 self.player_state = 5.5
                 self.contadorAnimacao = 0
+        for a in self.enemy_list:
+            a.life.receive_damage(50)
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
@@ -211,7 +229,7 @@ class Player():
 
 
         self.contadorAnimacao += self.janela.delta_time()
-        self.player.draw()
+        #self.player.draw()
         self.player.play()
         self.player.update()
         self.contadorAnimacao += self.janela.delta_time()
