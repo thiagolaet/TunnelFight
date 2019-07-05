@@ -55,6 +55,6 @@ class Menu(object):
         elif(self.mouse.is_over_object(self.sair)):
             self.sairHover.draw()
             if(self.mouse.is_button_pressed(1)):
-                globals.GAME_STATE = 4
+                globals.GAME_STATE = 15
         
         
