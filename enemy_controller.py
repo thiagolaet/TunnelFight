@@ -44,7 +44,7 @@ class Enemy_Controller():
             self.food_list[a].timer += self.janela.delta_time()
             self.food_list[a].update()
             if self.food_list[a].sprite.collided(self.player.player) and self.food_list[a].timer >= 2:
-                self.player.life.set_life(20)
+                self.player.life.set_life(self.food_list[a].heal)
                 self.food_list.pop(a)
                 break
 
