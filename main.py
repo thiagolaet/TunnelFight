@@ -32,7 +32,7 @@ while True:
     elif(globals.GAME_STATE == 3):
         ranking.run()
     elif globals.GAME_STATE == 4:
-        gameover.run()
+        gameover.run(jogo.gameController.pontuacao)
 
     else:
         globals.GAME_STATE = 1
