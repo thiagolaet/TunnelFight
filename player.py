@@ -73,7 +73,7 @@ class Player():
         if self.player_state != 2: 
             self.player.set_sequence(8, 16)
             self.player_state = 2
-        self.player.y -= 0.2        
+        self.player.y -= self.janela.delta_time() * globals.frame_per_SECOND 
         self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
@@ -81,7 +81,7 @@ class Player():
         if self.player_state != 2: 
             self.player.set_sequence(8, 16)
             self.player_state = 2
-        self.player.y += 0.2
+        self.player.y += self.janela.delta_time() * globals.frame_per_SECOND 
         self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
@@ -96,7 +96,7 @@ class Player():
         if self.player_state != 2.5:
             self.player.set_sequence(16, 24)
             self.player_state = 2.5
-        self.player.y -= 0.2
+        self.player.y -= self.janela.delta_time() * globals.frame_per_SECOND 
         self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 2
 
@@ -104,30 +104,30 @@ class Player():
         if self.player_state != 2.5:
             self.player.set_sequence(16, 24)
             self.player_state = 2.5
-        self.player.y += 0.2
+        self.player.y += self.janela.delta_time() * globals.frame_per_SECOND 
         self.player.x -= 2 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 2
 
     def walkUp(self):
         if self.direcao == 1:
-            self.player.y -= 0.2
+            self.player.y -= self.janela.delta_time() * globals.frame_per_SECOND 
             if self.player_state != 2: 
                 self.player.set_sequence(8, 16)
                 self.player_state = 2
         if self.direcao == 2:
-            self.player.y -= 0.2
+            self.player.y -= self.janela.delta_time() * globals.frame_per_SECOND 
             if self.player_state != 2.5: 
                 self.player.set_sequence(16, 24)
                 self.player_state = 2.5
 
     def walkDown(self):
         if self.direcao == 1:
-            self.player.y += 0.2
+            self.player.y += self.janela.delta_time() * globals.frame_per_SECOND 
             if self.player_state != 2: 
                 self.player.set_sequence(8, 16)
                 self.player_state = 2
         if self.direcao == 2:
-            self.player.y += 0.2
+            self.player.y += self.janela.delta_time() * globals.frame_per_SECOND 
             if self.player_state != 2.5: 
                 self.player.set_sequence(16, 24)
                 self.player_state = 2.5
