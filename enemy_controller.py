@@ -10,13 +10,14 @@ class Enemy_Controller():
         self.player = player
         self.janela = janela
         self.food_list = []
+        self.dead_enemies = 0
 
     def novaMorte(self, inimigo):
         self.dieList.append(Animation("assets/enemy_dying.png", 28))
         self.dieList[len(self.dieList)-1].set_position(inimigo.enemy.x, inimigo.enemy.y)
         self.dieList[len(self.dieList)-1].set_sequence_time(0, 14, 100)
         self.dieList[len(self.dieList)-1].set_sequence_time(14, 28, 100)
-
+        self.dead_enemies += 1
         if inimigo.direcao == 1:
             self.dieList[len(self.dieList)-1].set_sequence(0, 14)
         elif inimigo.direcao == 2:
