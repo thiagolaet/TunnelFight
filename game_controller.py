@@ -18,7 +18,7 @@ class GameController:
             self.wave_time_counter += self.janela.delta_time()
             if self.wave_time_counter >= 5:
                 self.wave_time_counter = 0
-                self.enemy_controller.start_a_wave(self.start_enemies + self.current_wave)
+                self.enemy_controller.start_a_wave(self.current_wave + 1)
                 self.current_wave += 1
                 self.pontuacao += 500
 
