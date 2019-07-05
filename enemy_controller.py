@@ -34,7 +34,7 @@ class Enemy_Controller():
             elif index == 2:
                 food = Sprite("assets/sushi.png")
                 heal = 50
-            food.set_position(inimigo.enemy.x, inimigo.enemy.y)
+            food.set_position(inimigo.enemy.x + inimigo.enemy.width/2, inimigo.enemy.y + inimigo.enemy.height - food.height)
             fd = Food(food, heal)
             self.food_list.append(fd)
 
