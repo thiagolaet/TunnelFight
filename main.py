@@ -21,6 +21,8 @@ ranking = Ranking(janela)
 while globals.GAME_STATE != 4:
     if(globals.GAME_STATE == 1):
         menu.run()
+        if jogo.jogando == False:
+            jogo = Jogo(janela)
     elif(globals.GAME_STATE == 2):    
         jogo.run()
     elif(globals.GAME_STATE == 3):

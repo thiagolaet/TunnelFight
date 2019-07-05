@@ -22,6 +22,7 @@ class Jogo(object):
         self.pontuacao = 0
         self.wave = 0
         self.set_pos()
+        self.jogando = True
 
     #Deve ser chamado quando o player toma um hit para não gastar processamento atoa
     def atualizaHudVida(self):
@@ -60,6 +61,7 @@ class Jogo(object):
 
     def run(self):
         if(self.teclado.key_pressed("ESC")):
+            self.jogando = False
             globals.GAME_STATE = 1
 
         self.gameController.run()

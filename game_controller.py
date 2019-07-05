@@ -85,9 +85,5 @@ class GameController:
     def run(self):
         self.wave_controller()
         self.player_enemy_list()
-<<<<<<< Updated upstream
-
-=======
         self.food_control()
->>>>>>> Stashed changes
         self.draw()

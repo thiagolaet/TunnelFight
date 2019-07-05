@@ -12,7 +12,7 @@ class Player():
         self.teclado = janela.get_keyboard()
 
         self.player = Animation("assets/player-animation-2.png", 77)
-        self.player.set_position(100, 360)
+        self.player.set_position(self.janela.width/2 - self.player.width/2, 360)
         self._set_seq_time()
         
         self.attack_rate = 0
