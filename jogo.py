@@ -6,6 +6,7 @@ from PPlay.animation import *
 from player import Player
 from enemy import Enemy1
 from enemy_controller import Enemy_Controller
+from game_controller import GameController
 import globals
 
 class Jogo(object):
@@ -13,7 +14,8 @@ class Jogo(object):
         self.janela = janela
         self.teclado = janela.get_keyboard()
         self.player = Player(self.janela)
-        self.enemyController = Enemy_Controller(1, self.janela, self.player)
+        self.enemyController = Enemy_Controller(3, self.janela, self.player)
+        self.gameController = GameController(self.player, self.enemyController)
         self.background = Sprite("assets/bg-fase1.png", 1)
         self.vidaHud = Animation("assets/vida_hud.png", 11)
         self.vida = self.player.life.currentLife
@@ -23,6 +25,7 @@ class Jogo(object):
 
     #Deve ser chamado quando o player toma um hit para não gastar processamento atoa
     def atualizaHudVida(self):
+        self.vida = self.player.life.currentLife
         if 90 < (self.vida) <= 100:
             self.vidaHud.set_curr_frame(0)
         elif 80 < (self.vida) <= 90:
@@ -57,9 +60,11 @@ class Jogo(object):
 
     def run(self):
 
+        self.gameController.player_enemy_list()
         if(self.teclado.key_pressed("ESC")):
             globals.GAME_STATE = 1
         self.atualizaHudVida()
         self._draw()
+        self.gameController.draw()
         self.enemyController.run()
         self.player.run()

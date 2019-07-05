@@ -14,7 +14,7 @@ class Enemy1():
         self.player = player
         self.teclado = janela.get_keyboard()
 
-        self.enemy = Animation("assets/enemy1-medium.png", 70)
+        self.enemy = Animation("assets/enemy1-medium.png", 42)
         self.enemy.set_position(x, y)
         self._set_seq_time()
 
