@@ -14,7 +14,7 @@ import globals
 
 janela = Window(globals.WIDTH, globals.HEIGHT)
 teclado = janela.get_keyboard()
-janela.set_title("Daft Drunk")
+janela.set_title("Tunnel Fight")
 
 s_c = Sound_controller()
 gameover = GameOver(janela)

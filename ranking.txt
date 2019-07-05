@@ -1,2 +1,3 @@
 Laet 3 1100
 Ulesses 3 1100
+Thiago 7 4000
