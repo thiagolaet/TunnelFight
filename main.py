@@ -9,6 +9,7 @@ from menu import Menu
 from jogo import Jogo
 from ranking import Ranking
 from sound_controller import*
+from game_over import*
 import globals
 
 janela = Window(globals.WIDTH, globals.HEIGHT)
@@ -16,12 +17,12 @@ teclado = janela.get_keyboard()
 janela.set_title("Daft Drunk")
 
 s_c = Sound_controller()
-
+gameover = GameOver(janela)
 jogo = Jogo(janela)
 menu = Menu(janela)
 ranking = Ranking(janela)
 
-while globals.GAME_STATE != 4:
+while True:
     if(globals.GAME_STATE == 1):
         menu.run()
         if jogo.jogando == False:
@@ -30,5 +31,16 @@ while globals.GAME_STATE != 4:
         jogo.run()
     elif(globals.GAME_STATE == 3):
         ranking.run()
-    s_c.run()
+    elif globals.GAME_STATE == 4:
+        gameover.run()
+
+    else:
+        globals.GAME_STATE = 1
+
+    if globals.GAME_STATE != 4:
+        s_c.gameover.stop()
+        s_c.tema.play()
+    else:
+        s_c.tema.stop()
+        s_c.gameover.play()
     janela.update()

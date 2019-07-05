@@ -3,6 +3,7 @@ from PPlay.sprite import *
 from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.animation import *
+from PPlay.sound import *
 import globals
 from life import*
 
@@ -32,8 +33,10 @@ class Player():
         self.enemy_list = []
 
         self.atacado = False
-
         self.hitbox = Sprite("assets/hitbox_player.png")
+
+        self.punch_sound = Sound("assets/punch_sound.ogg")
+        self.kick_sound = Sound("assets/kick_sound.ogg")
 
         self.gameOver = False
 
@@ -52,7 +55,6 @@ class Player():
         self.player.set_sequence_time(61, 64, 180)
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 76, 150)
-
 
     def idleRight(self):
         if self.player_state != 1:
@@ -156,7 +158,6 @@ class Player():
                         a.life.receive_damage(10)
                         a.tomouDano = True
 
-
     def weakKick(self):
         if self.attack_rate <= 0:
             self.attack_rate = 0.7
@@ -199,7 +200,6 @@ class Player():
                         a.life.receive_damage(30)
                         a.tomouDano = True
 
-
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
             return 0.4
@@ -233,8 +233,6 @@ class Player():
         if self.player_state != 7:
             self.player_state = 7
         self.contadorAnimacao = 0
-
-        
 
     def run(self):
         

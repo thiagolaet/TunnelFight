@@ -29,4 +29,6 @@ class GameOver(object):
     def run(self):
         self._draw()
         self.set_pos()
+        if self.janela.get_keyboard().key_pressed("ESC"):
+            globals.GAME_STATE = 1
         
