@@ -24,7 +24,7 @@ class Ranking(object):
 
     def run(self):
         self._draw()
-        '''
+        
         arq = open('ranking.txt','r')
         conteudo = arq.readlines()
         nomes=[]
@@ -44,6 +44,6 @@ class Ranking(object):
             if i>4:
                 break
             self.janela.draw_text("{} - {} - {} pontos".format(i+1, nomes[i], pontos[i]), 240, 100+i*50, size=32, color=(255, 255, 255), font_name="Minecraft")
-        '''
+        
         if(self.teclado.key_pressed("ESC")):
             globals.GAME_STATE =  1

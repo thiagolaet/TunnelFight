@@ -234,21 +234,6 @@ class Player():
             self.player_state = 7
         self.contadorAnimacao = 0
 
-    def morrer(self):
-        if self.player_state != 15:
-            if self.direcao == 1:
-                self.player.set_sequence(64,70)
-            elif self.direcao == 2:
-                self.player.set_sequence(70,77)
-
-            self.player_state = 15
-
-        if self.player.get_curr_frame() == 75:
-            self.player.stop()
-            self.gameOver = True
-
-            
-
         
 
     def run(self):
@@ -258,7 +243,7 @@ class Player():
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if not self.life.alive:
-            self.morrer()
+            globals.GAME_STATE = 4
 
         if self.contadorAnimacao >= tempocontadorAnimacao:            
             #Movimentação Básica

@@ -19,7 +19,6 @@ class GameController:
             if self.wave_time_counter >= 5:
                 self.wave_time_counter = 0
                 self.enemy_controller.start_a_wave(self.start_enemies + self.current_wave)
-                print("Wave: " + str(self.current_wave))
                 self.current_wave += 1
                 self.pontuacao += 500
 
@@ -64,7 +63,6 @@ class GameController:
         if self.dead_enemies != self.enemy_controller.dead_enemies:
             self.pontuacao += (self.enemy_controller.dead_enemies - self.dead_enemies) * 50
             self.dead_enemies = self.enemy_controller.dead_enemies
-            print(self.pontuacao)
         self.wave_controller()
         self.player_enemy_list()
         self.draw()

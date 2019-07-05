@@ -64,8 +64,6 @@ class Jogo(object):
             self.jogando = False
             globals.GAME_STATE = 1
 
-
-
         self.gameController.run()
         self.atualizaHudVida()
         self.enemyController.run()
