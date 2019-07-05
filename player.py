@@ -48,6 +48,7 @@ class Player():
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 77, 150)
 
+
     def idleRight(self):
         if self.player_state != 1:
             self.player.set_sequence(0, 4)
@@ -194,12 +195,9 @@ class Player():
             return 1.6
         else: return 0
 
-    def run(self):
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> e1c729c0f24196b90942c7f8b5688cd492c47858
+    def run(self):
+        
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:

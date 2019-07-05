@@ -1,10 +1,6 @@
 from random import sample
 from random import randrange
 from PPlay.sprite import Sprite
-<<<<<<< HEAD
-=======
-
->>>>>>> e1c729c0f24196b90942c7f8b5688cd492c47858
 from time import time
 class GameController:
     def __init__(self, strt, player, enemycontroller, janela):
@@ -15,10 +11,7 @@ class GameController:
         self.wave_time_counter = 0
         self.janela = janela
         self.food_list = []
-<<<<<<< HEAD
 
-=======
->>>>>>> e1c729c0f24196b90942c7f8b5688cd492c47858
 
     def wave_controller(self):
         if len(self.enemy_controller.enemyList) == 0:
@@ -30,7 +23,6 @@ class GameController:
                 print("Wave: " + str(self.current_wave))
                 self.current_wave += 1
 
-<<<<<<< HEAD
     def spawn_food(self):
         index = randrange(0, 3)
         if index == 0:
@@ -45,8 +37,6 @@ class GameController:
         self.food_list.append(food)
 
 
-=======
->>>>>>> e1c729c0f24196b90942c7f8b5688cd492c47858
     def player_enemy_list(self):
         temp = []
         temp2 = []
@@ -60,28 +50,13 @@ class GameController:
                 temp2[a] = temp[temp2[a]]
         self.player.enemy_list = temp2
 
-    def spawn_food(self):
-        index = randrange(0, 3)
-        if index == 0:
-            food = Sprite("assets/frango_assado.png")
-        elif index == 1:
-            food = Sprite("assets/taco.png")
-        elif index == 2:
-            food = Sprite("assets/sushi.png")
-        food.x = randrange(0, self.janela.width - food.width)
-        food.y = randrange(self.janela.height/2, self.janela.height)
-
-        self.food_list.append(food)
 
     def draw(self):
         templist = []
         templist.append(self.player.player)
         for a in self.food_list:
             templist.append(a)
-<<<<<<< HEAD
         templist.extend(self.enemy_controller.dieList)
-=======
->>>>>>> e1c729c0f24196b90942c7f8b5688cd492c47858
         for a in self.enemy_controller.enemyList:
             templist.append(a.enemy)
         def swap(i, j):
