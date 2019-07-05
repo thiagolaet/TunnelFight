@@ -56,13 +56,15 @@ class Jogo(object):
     def _draw(self):
         self.background.draw()
         self.vidaHud.draw()
-        self.janela.draw_text(str(self.pontuacao) + " pts", self.janela.width - 200, 40, size=30, color=(255, 255, 255), font_name="Minecraft")
-
+        self.janela.draw_text(str(self.gameController.pontuacao) + " pts", self.janela.width - 200, 40, size=30, color=(255, 255, 255), font_name="Minecraft")
+        self.janela.draw_text("Wave " + str(self.gameController.current_wave - 1), self.janela.width/2 - 55, 40, size=40, color=(255, 255, 255), font_name="Minecraft")
 
     def run(self):
         if(self.teclado.key_pressed("ESC")):
             self.jogando = False
             globals.GAME_STATE = 1
+
+
 
         self.gameController.run()
         self.atualizaHudVida()

@@ -17,7 +17,7 @@ class Enemy_Controller():
         self.dieList[len(self.dieList)-1].set_position(inimigo.enemy.x, inimigo.enemy.y)
         self.dieList[len(self.dieList)-1].set_sequence_time(0, 14, 100)
         self.dieList[len(self.dieList)-1].set_sequence_time(14, 28, 100)
-
+        self.dead_enemies += 1
         if inimigo.direcao == 1:
             self.dieList[len(self.dieList)-1].set_sequence(0, 14)
         elif inimigo.direcao == 2:
@@ -59,7 +59,6 @@ class Enemy_Controller():
         for a in range(len(self.enemyList)):
             if not self.enemyList[a].life.alive:
                 self.novaMorte(self.enemyList[a])
-                self.dead_enemies += 1
                 self.enemyList.pop(a)
                 break
 

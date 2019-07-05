@@ -32,6 +32,9 @@ class Player():
         #inimgos que tomarão dano no próximo ataque
         self.enemy_list = []
 
+        self.hitbox = Sprite("assets/hitbox_player.png")
+
+
     def _set_seq_time(self):
         self.player.set_sequence_time(0, 4, 130)    
         self.player.set_sequence_time(4, 8, 130)
@@ -201,9 +204,23 @@ class Player():
             return 1.6
         else: return 0
 
+    def checarLimiteMapa(self):
+        if self.player.y < 278:
+            self.player.y = 278
+
+        if self.player.x + 45 < 0:
+            self.player.x = -45
+
+        if self.player.x + self.player.width - 45 > self.janela.width:
+            self.player.x = self.janela.width - self.player.width + 45
+
+        if self.player.y + self.player.height - 30 > 600:
+            self.player.y = 600 + 30 - self.player.height
 
     def run(self):
         
+        self.checarLimiteMapa()
+        self.hitbox.set_position(self.player.x + 48, self.player.y + 36)
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:
