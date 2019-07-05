@@ -1,7 +1,7 @@
 from enemy import*
 from random import randrange
 from food import*
-from PPlay.sprite import Sprite
+from PPlay.animation import Animation
 
 class Enemy_Controller():
     def __init__(self, janela, player):
@@ -24,16 +24,17 @@ class Enemy_Controller():
             self.dieList[len(self.dieList)-1].set_sequence(14, 28)
 
         if randrange(1, 3) == 2:
-            index = randrange(0, 3)
+            #index = randrange(0, 3)
+            index = 0
             heal = 0
             if index == 0:
-                food = Sprite("assets/frango_assado.png")
+                food = Animation("assets/frango_assado.png", 4)
                 heal = 100
             elif index == 1:
-                food = Sprite("assets/taco.png")
+                food = Animation("assets/taco.png", 4)
                 heal = 50
             elif index == 2:
-                food = Sprite("assets/sushi.png")
+                food = Animation("assets/sushi.png", 4)
                 heal = 50
             food.set_position(inimigo.enemy.x, inimigo.enemy.y + inimigo.enemy.height - food.height)
             fd = Food(food, heal)
@@ -42,6 +43,7 @@ class Enemy_Controller():
     def food_control(self):
         for a in range(len(self.food_list)):
             self.food_list[a].timer += self.janela.delta_time()
+            self.food_list[a].update()
             if self.food_list[a].sprite.collided(self.player.player) and self.food_list[a].timer >= 2:
                 self.player.life.set_life(20)
                 self.food_list.pop(a)
