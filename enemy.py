@@ -158,6 +158,7 @@ class Enemy1():
         self.contadorAtaque = 0
         self.contadorAnimacao = 0
         self.atacando = True
+        player.atacado = True
         player.life.receive_damage(10)
 
     def follow_target(self, target):

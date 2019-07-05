@@ -31,6 +31,8 @@ class Player():
         #inimgos que tomarão dano no próximo ataque
         self.enemy_list = []
 
+        self.atacado = False
+
         self.hitbox = Sprite("assets/hitbox_player.png")
 
 
@@ -45,8 +47,8 @@ class Player():
         self.player.set_sequence_time(37, 42, 120)
         self.player.set_sequence_time(42, 50, 100)
         self.player.set_sequence_time(50, 58, 100)
-        self.player.set_sequence_time(59, 61, 120)
-        self.player.set_sequence_time(61, 64, 120)
+        self.player.set_sequence_time(59, 61, 180)
+        self.player.set_sequence_time(61, 64, 180)
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 77, 150)
 
@@ -204,6 +206,8 @@ class Player():
             return 0.5
         elif self.player_state == 5 or self.player_state == 5.5:
             return 0.8
+        elif self.player_state == 7:
+            return 0.2
         else: return 0
 
     def checarLimiteMapa(self):
@@ -219,15 +223,23 @@ class Player():
         if self.player.y + self.player.height - 30 > 600:
             self.player.y = 600 + 30 - self.player.height
 
+    def sendoAtacado(self):
+        if self.direcao == 1:
+            self.player.set_sequence(59, 61)
+        elif self.direcao == 2:
+            self.player.set_sequence(61, 64)
+
+        if self.player_state != 7:
+            self.player_state = 7
+        self.contadorAnimacao = 0
+
     def run(self):
         
         self.checarLimiteMapa()
         self.hitbox.set_position(self.player.x + 48, self.player.y + 36)
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
-        if self.contadorAnimacao >= tempocontadorAnimacao:
-            
-
+        if self.contadorAnimacao >= tempocontadorAnimacao:            
             #Movimentação Básica
             if(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
                 self.walkRightUp()
@@ -260,6 +272,11 @@ class Player():
                     self.weakKick()
                 elif(self.teclado.key_pressed("K")):
                     self.strongKick()
+
+        if(self.atacado == True):
+            self.sendoAtacado()
+            self.atacado = False
+            self.attack_rate = 0.2
 
         self.attack_rate -= self.janela.delta_time()
         #self.player.draw()
