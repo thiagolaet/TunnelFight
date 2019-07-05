@@ -14,7 +14,7 @@ class Enemy1():
         self.player = player
         self.teclado = janela.get_keyboard()
 
-        self.enemy = Animation("assets/enemy1-medium.png", 42)
+        self.enemy = Animation("assets/enemy1-medium.png", 36)
         self.enemy.set_position(x, y)
         self._set_seq_time()
 
@@ -31,6 +31,7 @@ class Enemy1():
         self.contadorAtaque = 0
         self.enemy.set_sequence(0, 4)
 
+        self.tomouDano = False
         #pode andar
         self.canWalk = True
 
@@ -42,8 +43,8 @@ class Enemy1():
         self.enemy.set_sequence_time(14, 20, 100) #WALK
         self.enemy.set_sequence_time(20, 25, 220) #attack1
         self.enemy.set_sequence_time(25, 30, 220) #attack1
-        self.enemy.set_sequence_time(30, 33, 200) #hit 1
-        self.enemy.set_sequence_time(33, 36, 200) #hit 1
+        self.enemy.set_sequence_time(30, 33, 100) #hit 1
+        self.enemy.set_sequence_time(33, 36, 100) #hit 1
         self.enemy.set_sequence_time(36, 39, 200) #hit 2
         self.enemy.set_sequence_time(39, 42, 200) #hit 2
         self.enemy.set_sequence_time(42, 56, 200) #die
@@ -131,6 +132,15 @@ class Enemy1():
                 self.enemy.set_sequence(14, 20)
                 self.enemy_state = 2.5
 
+    def tomandoHit(self):
+        if self.direcao == 1:
+            self.enemy.set_sequence(30, 33)
+        if self.direcao == 2:
+            self.enemy.set_sequence(33, 36)
+        self.enemy_state = 10
+        self.contadorAnimacao = 0
+
+
     def attack(self, player):
         if self.direcao == 1:
             if self.enemy_state != 3:
@@ -147,12 +157,15 @@ class Enemy1():
         player.life.receive_damage(10)
 
     def follow_target(self, target):
+        if self.tomouDano == True: 
+            self.tomandoHit()
+            self.tomouDano = False
+        
         tempoContadorAnimacao = self.checarContadorAnimacao()  
         if target.player.x < self.enemy.x:
             self.direcao = 2
         elif target.player.x > self.enemy.x:
             self.direcao = 1
-
         if(self.contadorAnimacao > tempoContadorAnimacao):
                 self.canWalk = True
                 if self.enemy.collided(target.player):
@@ -179,6 +192,8 @@ class Enemy1():
     def checarContadorAnimacao(self):
         if self.enemy_state == 3 or self.enemy_state == 3.5:
             return 1
+        elif self.enemy_state == 10:
+            return 0.2
         return 0
 
     def run(self, player):

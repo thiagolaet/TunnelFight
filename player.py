@@ -149,6 +149,8 @@ class Player():
 
             for a in self.enemy_list:
                 a.life.receive_damage(10)
+                a.tomouDano = True
+
 
     def weakKick(self):
         if self.attack_rate <= 0:
@@ -167,6 +169,7 @@ class Player():
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
                 a.life.receive_damage(20)
+                a.tomouDano = True
 
     def strongKick(self):
         if self.attack_rate <= 0:
@@ -185,6 +188,8 @@ class Player():
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
                 a.life.receive_damage(30)
+                a.tomouDano = True
+
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
