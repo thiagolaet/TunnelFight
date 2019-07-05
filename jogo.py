@@ -61,10 +61,13 @@ class Jogo(object):
 
 
 
+
     def run(self):
         if(self.teclado.key_pressed("ESC")):
             self.jogando = False
             globals.GAME_STATE = 1
+
+
 
         self.gameController.run()
         self.atualizaHudVida()

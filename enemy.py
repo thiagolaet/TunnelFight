@@ -141,6 +141,7 @@ class Enemy1():
             self.enemy.set_sequence(33, 36)
         self.enemy_state = 10
         self.contadorAnimacao = 0
+        self.contadorAtaque = 1.5
 
 
     def attack(self, player):
@@ -166,14 +167,14 @@ class Enemy1():
                 self.tomouDano = False
         
         tempoContadorAnimacao = self.checarContadorAnimacao()  
-        if target.player.x < self.enemy.x:
+        if target.hitbox.x + target.hitbox.width < self.enemy.x:
             self.direcao = 2
-        elif target.player.x > self.enemy.x:
+        elif target.hitbox.x - 50 > self.enemy.x:
             self.direcao = 1
         if(self.contadorAnimacao > tempoContadorAnimacao):
             self.atacando = False
             self.canWalk = True
-            if self.enemy.collided(target.player):
+            if self.enemy.collided(target.hitbox):
                 self.canWalk = False
             if self.canWalk:
                 if self.direcao == 2:
@@ -181,9 +182,9 @@ class Enemy1():
                 elif self.direcao == 1:
                     self.walkRight()
 
-                if target.player.y < self.enemy.y:
+                if target.hitbox.y < self.enemy.y:
                     self.walkUp()
-                elif target.player.y > self.enemy.y:
+                elif target.hitbox.y > self.enemy.y:
                     self.walkDown()
             else:
                 if self.contadorAtaque > 3:
