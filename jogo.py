@@ -69,3 +69,4 @@ class Jogo(object):
 
         self._draw()
         self.gameController.draw()
+        self.enemyController.atualizaMorte()

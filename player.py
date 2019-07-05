@@ -198,8 +198,6 @@ class Player():
 
     def run(self):
         
-        print(len(self.enemy_list))
-
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:
