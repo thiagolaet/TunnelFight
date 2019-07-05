@@ -51,6 +51,13 @@ class GameController:
         self.player.enemy_list = temp2
 
 
+    def food_control(self):
+        for a in range(len(self.food_list)):
+            if self.food_list[a].collided(self.player.player):
+                self.player.life.set_life(20)
+                self.food_list.pop(a)
+                break
+
     def draw(self):
         templist = []
         templist.append(self.player.player)
@@ -78,5 +85,9 @@ class GameController:
     def run(self):
         self.wave_controller()
         self.player_enemy_list()
+<<<<<<< Updated upstream
 
+=======
+        self.food_control()
+>>>>>>> Stashed changes
         self.draw()

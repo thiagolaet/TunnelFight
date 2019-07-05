@@ -13,3 +13,8 @@ class Life():
 
     def reset_life(self):
         self.currentLife = self.maxLife
+
+    def set_life(self, value):
+        self.currentLife += value
+        if self.currentLife > 100:
+            self.currentLife = 100
