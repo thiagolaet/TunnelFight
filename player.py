@@ -223,7 +223,7 @@ class Player():
 
 
         self.contadorAnimacao += self.janela.delta_time()
-        self.player.draw()
+        #self.player.draw()
         self.player.play()
         self.player.update()
         self.contadorAnimacao += self.janela.delta_time()

@@ -6,8 +6,7 @@ class Enemy_Controller():
         self.startEnemies = strt
         self.player = player
         for a in range(self.startEnemies):
-            #pos = randrange(janela.height / 2, janela.height)
-            pos = 10
+            pos = randrange(janela.height / 2, janela.height)
             if a % 2 == 0:
                 temp = Enemy1(janela, player, -100, pos)
             else:
@@ -27,6 +26,6 @@ class Enemy_Controller():
                     self.enemyList[b].enemy.x += 10'''
 
     def run(self):
-        self.draw()
+        #self.draw()
         for a in self.enemyList:
             a.run(self.player)

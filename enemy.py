@@ -175,9 +175,7 @@ class Enemy1():
         
 
     def run(self, player):
-        self.enemy.draw()
+        #self.enemy.draw()
         self.enemy.update()
         self.follow_target(self.player)
         self.contadorAnimacao += self.janela.delta_time()
-        print(self.player.life.currentLife)
-        print(self.contadorAnimacao)
