@@ -14,8 +14,8 @@ class Jogo(object):
         self.janela = janela
         self.teclado = janela.get_keyboard()
         self.player = Player(self.janela)
-        self.enemyController = Enemy_Controller(1, self.janela, self.player)
-        self.gameController = GameController(self.player, self.enemyController)
+        self.enemyController = Enemy_Controller(self.janela, self.player)
+        self.gameController = GameController(4, self.player, self.enemyController, self.janela)
         self.background = Sprite("assets/bg-fase1.png", 1)
         self.vidaHud = Animation("assets/vida_hud.png", 11)
         self.vida = self.player.life.currentLife
@@ -59,12 +59,14 @@ class Jogo(object):
 
 
     def run(self):
-
-        self.gameController.player_enemy_list()
         if(self.teclado.key_pressed("ESC")):
             globals.GAME_STATE = 1
+
+        self.gameController.wave_controller()
+        self.gameController.player_enemy_list()
         self.atualizaHudVida()
-        self._draw()
-        self.gameController.draw()
         self.enemyController.run()
         self.player.run()
+
+        self._draw()
+        self.gameController.draw()

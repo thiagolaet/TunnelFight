@@ -1,30 +1,30 @@
 from enemy import*
 from random import randrange
 class Enemy_Controller():
-    def __init__(self, strt, janela, player):
+    def __init__(self, janela, player):
         self.enemyList = []
-        self.startEnemies = strt
         self.player = player
-        for a in range(self.startEnemies):
-            pos = randrange(janela.height / 2, janela.height)
-            if a % 2 == 0:
-                temp = Enemy1(janela, player, -100, pos)
-            else:
-                temp = Enemy1(janela, player, janela.width, pos)
-            self.enemyList.append(temp)
+        self.janela = janela
 
 
-    def draw(self):
-        for a in self.enemyList:
-            a.enemy.draw()
-
-    '''def checar_iguais(self):
+    def list_control(self):
         for a in range(len(self.enemyList)):
-            for b in range(a, len(self.enemyList)):
-                if self.enemyList[a].enemy.x == self.enemyList[b].enemy.x and self.enemyList[a].enemy.y == self.enemyList[b].enemy.y:
-                    self.enemyList[b].enemy.x += 10'''
+            if not self.enemyList[a].life.alive:
+                self.enemyList.pop(a)
+                break
+
+    def start_a_wave(self, nmbr):
+        if len(self.enemyList) == 0:
+            for a in range(nmbr):
+                pos = randrange(self.janela.height / 2, self.janela.height)
+                if a % 2 == 0:
+                    temp = Enemy1(self.janela, self.player, -100, pos)
+                else:
+                    temp = Enemy1(self.janela, self.player, self.janela.width, pos)
+                self.enemyList.append(temp)
+
 
     def run(self):
-        #self.draw()
+        self.list_control()
         for a in self.enemyList:
             a.run(self.player)
