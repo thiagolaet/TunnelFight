@@ -1,11 +1,15 @@
 from enemy import*
 from random import randrange
+from food import*
+from PPlay.sprite import Sprite
+
 class Enemy_Controller():
     def __init__(self, janela, player):
         self.enemyList = []
         self.dieList = []
         self.player = player
         self.janela = janela
+        self.food_list = []
 
     def novaMorte(self, inimigo):
         self.dieList.append(Animation("assets/enemy_dying.png", 28))
@@ -17,6 +21,30 @@ class Enemy_Controller():
             self.dieList[len(self.dieList)-1].set_sequence(0, 14)
         elif inimigo.direcao == 2:
             self.dieList[len(self.dieList)-1].set_sequence(14, 28)
+
+        if randrange(1, 3) == 2:
+            index = randrange(0, 3)
+            heal = 0
+            if index == 0:
+                food = Sprite("assets/frango_assado.png")
+                heal = 100
+            elif index == 1:
+                food = Sprite("assets/taco.png")
+                heal = 50
+            elif index == 2:
+                food = Sprite("assets/sushi.png")
+                heal = 50
+            food.set_position(inimigo.enemy.x, inimigo.enemy.y)
+            fd = Food(food, heal)
+            self.food_list.append(fd)
+
+    def food_control(self):
+        for a in range(len(self.food_list)):
+            self.food_list[a].timer += self.janela.delta_time()
+            if self.food_list[a].sprite.collided(self.player.player) and self.food_list[a].timer >= 2:
+                self.player.life.set_life(20)
+                self.food_list.pop(a)
+                break
 
     def atualizaMorte(self):
         for i in range(len(self.dieList)):
@@ -44,6 +72,6 @@ class Enemy_Controller():
 
     def run(self):
         self.list_control()
-
+        self.food_control()
         for a in self.enemyList:
             a.run(self.player)

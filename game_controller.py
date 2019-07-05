@@ -10,7 +10,6 @@ class GameController:
         self.current_wave = 1
         self.wave_time_counter = 0
         self.janela = janela
-        self.food_list = []
 
 
     def wave_controller(self):
@@ -19,23 +18,8 @@ class GameController:
             if self.wave_time_counter >= 2: 
                 self.wave_time_counter = 0
                 self.enemy_controller.start_a_wave(self.start_enemies + self.current_wave)
-                self.spawn_food()
                 print("Wave: " + str(self.current_wave))
                 self.current_wave += 1
-
-    def spawn_food(self):
-        index = randrange(0, 3)
-        if index == 0:
-            food = Sprite("assets/frango_assado.png")
-        elif index == 1:
-            food = Sprite("assets/taco.png")
-        elif index == 2:
-            food = Sprite("assets/sushi.png")
-        food.x = randrange(0, self.janela.width - food.width)
-        food.y = randrange(self.janela.height/2, self.janela.height)
-
-        self.food_list.append(food)
-
 
     def player_enemy_list(self):
         temp = []
@@ -50,19 +34,11 @@ class GameController:
                 temp2[a] = temp[temp2[a]]
         self.player.enemy_list = temp2
 
-
-    def food_control(self):
-        for a in range(len(self.food_list)):
-            if self.food_list[a].collided(self.player.player):
-                self.player.life.set_life(20)
-                self.food_list.pop(a)
-                break
-
     def draw(self):
         templist = []
         templist.append(self.player.player)
-        for a in self.food_list:
-            templist.append(a)
+        for a in self.enemy_controller.food_list:
+            templist.append(a.sprite)
         templist.extend(self.enemy_controller.dieList)
         for a in self.enemy_controller.enemyList:
             templist.append(a.enemy)
@@ -85,5 +61,4 @@ class GameController:
     def run(self):
         self.wave_controller()
         self.player_enemy_list()
-        self.food_control()
         self.draw()
