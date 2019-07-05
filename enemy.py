@@ -31,6 +31,8 @@ class Enemy1():
         self.contadorAtaque = 0
         self.enemy.set_sequence(0, 4)
 
+        self.atacando = False
+
         self.tomouDano = False
         #pode andar
         self.canWalk = True
@@ -154,12 +156,14 @@ class Enemy1():
                 self.enemy_state = 3.5
         self.contadorAtaque = 0
         self.contadorAnimacao = 0
+        self.atacando = True
         player.life.receive_damage(10)
 
     def follow_target(self, target):
-        if self.tomouDano == True: 
-            self.tomandoHit()
-            self.tomouDano = False
+        if not self.atacando:
+            if self.tomouDano == True: 
+                self.tomandoHit()
+                self.tomouDano = False
         
         tempoContadorAnimacao = self.checarContadorAnimacao()  
         if target.player.x < self.enemy.x:
@@ -167,27 +171,28 @@ class Enemy1():
         elif target.player.x > self.enemy.x:
             self.direcao = 1
         if(self.contadorAnimacao > tempoContadorAnimacao):
-                self.canWalk = True
-                if self.enemy.collided(target.player):
-                    self.canWalk = False
-                if self.canWalk:
-                    if self.direcao == 2:
-                        self.walkLeft()
-                    elif self.direcao == 1:
-                        self.walkRight()
+            self.atacando = False
+            self.canWalk = True
+            if self.enemy.collided(target.player):
+                self.canWalk = False
+            if self.canWalk:
+                if self.direcao == 2:
+                    self.walkLeft()
+                elif self.direcao == 1:
+                    self.walkRight()
 
-                    if target.player.y < self.enemy.y:
-                        self.walkUp()
-                    elif target.player.y > self.enemy.y:
-                        self.walkDown()
+                if target.player.y < self.enemy.y:
+                    self.walkUp()
+                elif target.player.y > self.enemy.y:
+                    self.walkDown()
+            else:
+                if self.contadorAtaque > 3:
+                    self.attack(target)
                 else:
-                    if self.contadorAtaque > 3:
-                        self.attack(target)
-                    else:
-                        if self.direcao == 1:
-                            self.idleRight()
-                        elif self.direcao == 2:
-                            self.idleLeft()
+                    if self.direcao == 1:
+                        self.idleRight()
+                    elif self.direcao == 2:
+                        self.idleLeft()
 
     def checarContadorAnimacao(self):
         if self.enemy_state == 3 or self.enemy_state == 3.5:

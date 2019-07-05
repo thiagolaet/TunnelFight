@@ -63,8 +63,6 @@ class Player():
         if self.player_state != 2: 
             self.player.set_sequence(8, 16)
             self.player_state = 2
-            self.player.y -= 0.2
-            self.player.y += 0.2
         self.player.x += 2 * self.janela.delta_time() * globals.frame_per_SECOND
         self.direcao = 1
 
@@ -148,8 +146,9 @@ class Player():
                     self.contadorAnimacao = 0
 
             for a in self.enemy_list:
-                a.life.receive_damage(10)
-                a.tomouDano = True
+                if not a.atacando:
+                    a.life.receive_damage(10)
+                    a.tomouDano = True
 
 
     def weakKick(self):
@@ -168,8 +167,9 @@ class Player():
                     self.player_state = 4.5
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
-                a.life.receive_damage(20)
-                a.tomouDano = True
+                if not a.atacando:
+                    a.life.receive_damage(20)
+                    a.tomouDano = True
 
     def strongKick(self):
         if self.attack_rate <= 0:
@@ -187,8 +187,9 @@ class Player():
                     self.player_state = 5.5
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
-                a.life.receive_damage(30)
-                a.tomouDano = True
+                if not a.atacando:
+                    a.life.receive_damage(30)
+                    a.tomouDano = True
 
 
     def checarcontadorAnimacao(self):
