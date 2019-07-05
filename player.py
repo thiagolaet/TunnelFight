@@ -17,7 +17,6 @@ class Player():
         
         self.attack_rate = 0
 
-
         #1 = direita / 2 = esquerda
         self.direcao = 1
 
@@ -150,8 +149,9 @@ class Player():
 
             for a in self.enemy_list:
                 if not a.atacando and ((a.enemy.x < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
-                    a.life.receive_damage(10)
-                    a.tomouDano = True
+                    if self.player.y < a.enemy.y and self.player.y + self.player.height > a.enemy.y + a.enemy.height:
+                        a.life.receive_damage(10)
+                        a.tomouDano = True
 
 
     def weakKick(self):
@@ -171,8 +171,9 @@ class Player():
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
                 if not a.atacando and ((a.enemy.x  < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
-                    a.life.receive_damage(20)
-                    a.tomouDano = True
+                    if self.player.y < a.enemy.y and self.player.y + self.player.height > a.enemy.y + a.enemy.height:
+                        a.life.receive_damage(20)
+                        a.tomouDano = True
 
     def strongKick(self):
         if self.attack_rate <= 0:
@@ -191,17 +192,18 @@ class Player():
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
                 if not a.atacando and ((a.enemy.x  < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
-                    a.life.receive_damage(30)
-                    a.tomouDano = True
+                    if self.player.y < a.enemy.y and self.player.y + self.player.height > a.enemy.y + a.enemy.height:
+                        a.life.receive_damage(30)
+                        a.tomouDano = True
 
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
-            return 0.6
+            return 0.4
         elif self.player_state == 4 or self.player_state == 4.5:
-            return 0.9
+            return 0.5
         elif self.player_state == 5 or self.player_state == 5.5:
-            return 1.6
+            return 0.8
         else: return 0
 
     def checarLimiteMapa(self):
@@ -224,16 +226,10 @@ class Player():
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:
-            #K - Chute Duplo / J - Soco fraco / K - Chute normal
-            if(self.teclado.key_pressed("J")):
-                self.weakPunch()
-            elif(self.teclado.key_pressed("L")):
-                self.weakKick()
-            elif(self.teclado.key_pressed("K")):
-                self.strongKick()
+            
 
             #Movimentação Básica
-            elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
+            if(self.teclado.key_pressed("D") and self.teclado.key_pressed("W")):
                 self.walkRightUp()
             elif(self.teclado.key_pressed("D") and self.teclado.key_pressed("S")):
                 self.walkRightDown()
@@ -249,14 +245,23 @@ class Player():
                 self.walkUp()
             elif(self.teclado.key_pressed("S")):
                 self.walkDown()
+
             else:
                 if self.direcao == 1:
                     self.idleRight()
                 elif self.direcao == 2:
                     self.idleLeft()
 
+            #K - Chute Duplo / J - Soco fraco / K - Chute normal
+            if self.attack_rate <= 0:
+                if(self.teclado.key_pressed("J")):
+                    self.weakPunch()
+                elif(self.teclado.key_pressed("L")):
+                    self.weakKick()
+                elif(self.teclado.key_pressed("K")):
+                    self.strongKick()
+
         self.attack_rate -= self.janela.delta_time()
-        self.contadorAnimacao += self.janela.delta_time()
         #self.player.draw()
         self.player.play()
         self.player.update()
