@@ -188,12 +188,9 @@ class Enemy1():
             elif self.direcao == 2:
                 self.idleLeft()
 
-        if not self.life.alive:
-            print("Ai papai murri")
-
-        self.follow_target(player)
+        if self.life.alive:
+            self.follow_target(player)
         self.contadorAnimacao += self.janela.delta_time()
-        #self.enemy.draw()
         self.enemy.play()
         self.enemy.update()
         self.contadorAnimacao += self.janela.delta_time()

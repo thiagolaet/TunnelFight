@@ -14,7 +14,7 @@ class Player():
         self.player = Animation("assets/player-animation-2.png", 77)
         self.player.set_position(100, 360)
         self._set_seq_time()
-        
+        self.attack_rate = 0
         #1 = direita / 2 = esquerda
         self.direcao = 1
 
@@ -28,7 +28,6 @@ class Player():
 
         #inimgos que tomarão dano no próximo ataque
         self.enemy_list = []
-
 
     def _set_seq_time(self):
         self.player.set_sequence_time(0, 4, 200)    
@@ -45,7 +44,6 @@ class Player():
         self.player.set_sequence_time(61, 64, 120)
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 77, 150)
-
 
     def draw(self):
         self.player.draw()
@@ -133,54 +131,59 @@ class Player():
                 self.player_state = 2.5
 
     def weakPunch(self):
-        if self.direcao == 1:
-            if self.player_state != 3:
-                self.player.set_sequence(24, 28)
-                self.player.set_curr_frame(24)
-                self.player_state = 3
-                self.contadorAnimacao = 0
-        elif self.direcao == 2:
-            if self.player_state != 3.5:
-                self.player.set_sequence(28, 32)
-                self.player.set_curr_frame(28)
-                self.player_state = 3.5
-                self.contadorAnimacao = 0
+        if self.attack_rate <= 0:
+            self.attack_rate = 0.5
+            if self.direcao == 1:
+                if self.player_state != 3:
+                    self.player.set_sequence(24, 28)
+                    self.player.set_curr_frame(24)
+                    self.player_state = 3
+                    self.contadorAnimacao = 0
+            elif self.direcao == 2:
+                if self.player_state != 3.5:
+                    self.player.set_sequence(28, 32)
+                    self.player.set_curr_frame(28)
+                    self.player_state = 3.5
+                    self.contadorAnimacao = 0
 
-        for a in self.enemy_list:
-            a.life.receive_damage(20)
+            for a in self.enemy_list:
+                a.life.receive_damage(10)
 
     def weakKick(self):
-        if self.direcao == 1:
-            if self.player_state != 4:
-                self.player.set_sequence(32, 37)
-                self.player.set_curr_frame(32)
-                self.player_state = 4
-                self.contadorAnimacao = 0
-        elif self.direcao == 2:
-            if self.player_state != 4.5:
-                self.player.set_sequence(37, 42)
-                self.player.set_curr_frame(37)
-                self.player_state = 4.5
-                self.contadorAnimacao = 0
-        for a in self.enemy_list:
-            a.life.receive_damage(30)
-
+        if self.attack_rate <= 0:
+            self.attack_rate = 0.7
+            if self.direcao == 1:
+                if self.player_state != 4:
+                    self.player.set_sequence(32, 37)
+                    self.player.set_curr_frame(32)
+                    self.player_state = 4
+                    self.contadorAnimacao = 0
+            elif self.direcao == 2:
+                if self.player_state != 4.5:
+                    self.player.set_sequence(37, 42)
+                    self.player.set_curr_frame(37)
+                    self.player_state = 4.5
+                    self.contadorAnimacao = 0
+            for a in self.enemy_list:
+                a.life.receive_damage(20)
 
     def strongKick(self):
-        if self.direcao == 1:
-            if self.player_state != 6:
-                self.player.set_sequence(42, 50)
-                self.player.set_curr_frame(42)
-                self.player_state = 5
-                self.contadorAnimacao = 0
-        elif self.direcao == 2:
-            if self.player_state != 6.5:
-                self.player.set_sequence(50, 58)
-                self.player.set_curr_frame(50)
-                self.player_state = 5.5
-                self.contadorAnimacao = 0
-        for a in self.enemy_list:
-            a.life.receive_damage(50)
+        if self.attack_rate <= 0:
+            self.attack_rate = 1.2
+            if self.direcao == 1:
+                if self.player_state != 6:
+                    self.player.set_sequence(42, 50)
+                    self.player.set_curr_frame(42)
+                    self.player_state = 5
+                    self.contadorAnimacao = 0
+            elif self.direcao == 2:
+                if self.player_state != 6.5:
+                    self.player.set_sequence(50, 58)
+                    self.player.set_curr_frame(50)
+                    self.player_state = 5.5
+                    self.contadorAnimacao = 0
+            for a in self.enemy_list:
+                a.life.receive_damage(30)
 
     def checarcontadorAnimacao(self):
         if self.player_state == 3 or self.player_state == 3.5:
@@ -227,9 +230,8 @@ class Player():
                 elif self.direcao == 2:
                     self.idleLeft()
 
-
+        self.attack_rate -= self.janela.delta_time()
         self.contadorAnimacao += self.janela.delta_time()
-        #self.player.draw()
         self.player.play()
         self.player.update()
         self.contadorAnimacao += self.janela.delta_time()

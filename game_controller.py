@@ -1,8 +1,24 @@
 from random import sample
+from time import time
 class GameController:
-    def __init__(self, player, enemycontroller):
+    def __init__(self, strt, player, enemycontroller, janela):
         self.player = player
         self.enemy_controller = enemycontroller
+        self.start_enemies = strt
+        self.current_wave = 1
+        self.wave_time_counter = 0
+        self.janela = janela
+
+
+    def wave_controller(self):
+        if len(self.enemy_controller.enemyList) == 0:
+            self.wave_time_counter += self.janela.delta_time()
+            if self.wave_time_counter >= 2:
+                self.wave_time_counter = 0
+                self.enemy_controller.start_a_wave(self.start_enemies + self.current_wave)
+                print("Wave: " + str(self.current_wave))
+                self.current_wave += 1
+
 
 
     def player_enemy_list(self):
@@ -16,24 +32,18 @@ class GameController:
             temp2 = sample(range(len(temp)), n)
             for a in range(0, len(temp2)):
                 temp2[a] = temp[temp2[a]]
-            print(len(temp2))
         self.player.enemy_list = temp2
 
 
     def draw(self):
         templist = []
-
         templist.append(self.player.player)
-
         for a in self.enemy_controller.enemyList:
             templist.append(a.enemy)
-
         def swap(i, j):
             templist[i], templist[j] = templist[j], templist[i]
-
         n = len(templist)
         swapped = True
-
         x = -1
         while swapped:
             swapped = False
@@ -47,5 +57,6 @@ class GameController:
             templist[a].draw()
 
     def run(self):
+        self.wave_controller()
         self.player_enemy_list()
         self.draw()

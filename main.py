@@ -22,8 +22,8 @@ enemy2 = Enemy1(janela, player, 600, 390)
 enemy3 = Enemy1(janela, player, 800, 390)
 enemy4 = Enemy1(janela, player, 700, 440)
 
-enemy_controller = Enemy_Controller(4, janela, player)
-gc = GameController(player, enemy_controller)
+enemy_controller = Enemy_Controller(janela, player)
+gc = GameController(4, player, enemy_controller, janela)
 
 
 while True:
