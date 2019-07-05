@@ -174,7 +174,7 @@ class Enemy1():
         if(self.contadorAnimacao > tempoContadorAnimacao):
             self.atacando = False
             self.canWalk = True
-            if self.enemy.collided(target.hitbox):
+            if self.enemy.collided(target.hitbox) and self.player.player.y < self.enemy.y and self.player.player.y + self.player.player.height > self.enemy.y + self.enemy.height:
                 self.canWalk = False
             if self.canWalk:
                 if self.direcao == 2:
@@ -188,7 +188,7 @@ class Enemy1():
                     self.walkDown()
             else:
                 if self.contadorAtaque > 3:
-                    self.attack(target)
+                        self.attack(target)
                 else:
                     if self.direcao == 1:
                         self.idleRight()
