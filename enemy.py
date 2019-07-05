@@ -184,6 +184,8 @@ class Enemy1():
     def run(self, player):
         #self.enemy.draw()
         self.enemy.update()
-        self.follow_target(self.player)
+        print(self.life.currentLife)
+        if self.life.alive:
+            self.follow_target(self.player)
         self.contadorAtaque += self.janela.delta_time()
         self.contadorAnimacao += self.janela.delta_time()
