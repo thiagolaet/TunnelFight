@@ -24,8 +24,7 @@ class Enemy_Controller():
             self.dieList[len(self.dieList)-1].set_sequence(14, 28)
 
         if randrange(1, 3) == 2:
-            #index = randrange(0, 3)
-            index = 0
+            index = randrange(0, 3)
             heal = 0
             if index == 0:
                 food = Animation("assets/frango_assado.png", 4)
@@ -35,7 +34,7 @@ class Enemy_Controller():
                 heal = 50
             elif index == 2:
                 food = Animation("assets/sushi.png", 4)
-                heal = 50
+                heal = 20
             food.set_position(inimigo.enemy.x, inimigo.enemy.y + inimigo.enemy.height - food.height)
             fd = Food(food, heal)
             self.food_list.append(fd)
