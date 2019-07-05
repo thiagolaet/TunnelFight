@@ -10,16 +10,18 @@ class GameController:
         self.current_wave = 1
         self.wave_time_counter = 0
         self.janela = janela
-
+        self.pontuacao = 0
+        self.dead_enemies = 0
 
     def wave_controller(self):
         if len(self.enemy_controller.enemyList) == 0:
             self.wave_time_counter += self.janela.delta_time()
-            if self.wave_time_counter >= 2: 
+            if self.wave_time_counter >= 5:
                 self.wave_time_counter = 0
                 self.enemy_controller.start_a_wave(self.start_enemies + self.current_wave)
                 print("Wave: " + str(self.current_wave))
                 self.current_wave += 1
+                self.pontuacao += 500
 
     def player_enemy_list(self):
         temp = []
@@ -59,6 +61,10 @@ class GameController:
             templist[a].draw()
 
     def run(self):
+        if self.dead_enemies != self.enemy_controller.dead_enemies:
+            self.pontuacao += (self.enemy_controller.dead_enemies - self.dead_enemies) * 50
+            self.dead_enemies = self.enemy_controller.dead_enemies
+            print(self.pontuacao)
         self.wave_controller()
         self.player_enemy_list()
         self.draw()

@@ -10,6 +10,7 @@ class Enemy_Controller():
         self.player = player
         self.janela = janela
         self.food_list = []
+        self.dead_enemies = 0
 
     def novaMorte(self, inimigo):
         self.dieList.append(Animation("assets/enemy_dying.png", 28))
@@ -34,7 +35,7 @@ class Enemy_Controller():
             elif index == 2:
                 food = Sprite("assets/sushi.png")
                 heal = 50
-            food.set_position(inimigo.enemy.x, inimigo.enemy.y)
+            food.set_position(inimigo.enemy.x, inimigo.enemy.y + inimigo.enemy.height - food.height)
             fd = Food(food, heal)
             self.food_list.append(fd)
 
@@ -57,6 +58,7 @@ class Enemy_Controller():
         for a in range(len(self.enemyList)):
             if not self.enemyList[a].life.alive:
                 self.novaMorte(self.enemyList[a])
+                self.dead_enemies += 1
                 self.enemyList.pop(a)
                 break
 
