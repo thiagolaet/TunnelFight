@@ -10,6 +10,7 @@ class Ranking(object):
         self.janela = janela
         self.teclado = janela.get_keyboard()
         self.titulo = Sprite("assets/ranking_titulo.png", 1)
+        self.background = Sprite("assets/bg-fase1-menu.png")
         self.set_pos()
         self._draw()
 
@@ -17,7 +18,7 @@ class Ranking(object):
         self.titulo.set_position(self.janela.width/2 - self.titulo.width/2, 25)
 
     def _draw(self):
-        self.janela.set_background_color((0,0,0))
+        self.background.draw()
         self.titulo.draw()
 
 

@@ -10,6 +10,7 @@ class Menu(object):
     def __init__(self, janela):
         self.janela = janela
         self.distancia = 60
+        self.background = Sprite("assets/bg-fase1-menu.png")
         self.arcade = Sprite("assets/botao_arcade.png")
         self.arcadeHover = Sprite("assets/botao_arcadehover.png")
         self.sair = Sprite("assets/botao_sair.png")
@@ -31,6 +32,7 @@ class Menu(object):
 
 
     def _draw(self):
+        self.background.draw()
         self.arcade.draw() 
         self.sair.draw() 
         self.ranking.draw()

@@ -35,6 +35,7 @@ class Player():
 
         self.hitbox = Sprite("assets/hitbox_player.png")
 
+        self.gameOver = False
 
     def _set_seq_time(self):
         self.player.set_sequence_time(0, 4, 130)    
@@ -50,7 +51,7 @@ class Player():
         self.player.set_sequence_time(59, 61, 180)
         self.player.set_sequence_time(61, 64, 180)
         self.player.set_sequence_time(64, 70, 150)
-        self.player.set_sequence_time(70, 77, 150)
+        self.player.set_sequence_time(70, 76, 150)
 
 
     def idleRight(self):
@@ -233,11 +234,31 @@ class Player():
             self.player_state = 7
         self.contadorAnimacao = 0
 
+    def morrer(self):
+        if self.player_state != 15:
+            if self.direcao == 1:
+                self.player.set_sequence(64,70)
+            elif self.direcao == 2:
+                self.player.set_sequence(70,77)
+
+            self.player_state = 15
+
+        if self.player.get_curr_frame() == 75:
+            self.player.stop()
+            self.gameOver = True
+
+            
+
+        
+
     def run(self):
         
         self.checarLimiteMapa()
         self.hitbox.set_position(self.player.x + 48, self.player.y + 36)
         tempocontadorAnimacao = self.checarcontadorAnimacao()
+
+        if not self.life.alive:
+            self.morrer()
 
         if self.contadorAnimacao >= tempocontadorAnimacao:            
             #Movimentação Básica

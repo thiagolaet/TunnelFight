@@ -70,6 +70,7 @@ class Jogo(object):
         self.atualizaHudVida()
         self.enemyController.run()
         self.player.run()
+            
 
         self._draw()
         self.gameController.draw()
