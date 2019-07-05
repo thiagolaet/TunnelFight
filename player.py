@@ -146,7 +146,7 @@ class Player():
                     self.contadorAnimacao = 0
 
             for a in self.enemy_list:
-                if not a.atacando:
+                if not a.atacando and ((a.enemy.x < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
                     a.life.receive_damage(10)
                     a.tomouDano = True
 
@@ -167,7 +167,7 @@ class Player():
                     self.player_state = 4.5
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
-                if not a.atacando:
+                if not a.atacando and ((a.enemy.x  < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
                     a.life.receive_damage(20)
                     a.tomouDano = True
 
@@ -187,7 +187,7 @@ class Player():
                     self.player_state = 5.5
                     self.contadorAnimacao = 0
             for a in self.enemy_list:
-                if not a.atacando:
+                if not a.atacando and ((a.enemy.x  < self.player.x and self.direcao == 2) or (a.enemy.x  > self.player.x and self.direcao == 1)):
                     a.life.receive_damage(30)
                     a.tomouDano = True
 
