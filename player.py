@@ -48,7 +48,6 @@ class Player():
         self.player.set_sequence_time(64, 70, 150)
         self.player.set_sequence_time(70, 77, 150)
 
-
     def idleRight(self):
         if self.player_state != 1:
             self.player.set_sequence(0, 4)
@@ -195,10 +194,7 @@ class Player():
             return 1.6
         else: return 0
 
-
     def run(self):
-        
-        print(len(self.enemy_list))
 
         tempocontadorAnimacao = self.checarcontadorAnimacao()
 
