@@ -11,7 +11,6 @@ class Enemy_Controller():
                 temp = Enemy1(janela, player, -100, pos)
             else:
                 temp = Enemy1(janela, player, janela.width, pos)
-            print(pos)
             self.enemyList.append(temp)
 
 

@@ -14,7 +14,7 @@ class Jogo(object):
         self.janela = janela
         self.teclado = janela.get_keyboard()
         self.player = Player(self.janela)
-        self.enemyController = Enemy_Controller(3, self.janela, self.player)
+        self.enemyController = Enemy_Controller(1, self.janela, self.player)
         self.gameController = GameController(self.player, self.enemyController)
         self.background = Sprite("assets/bg-fase1.png", 1)
         self.vidaHud = Animation("assets/vida_hud.png", 11)
