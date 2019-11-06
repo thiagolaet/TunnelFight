@@ -1,4 +1,4 @@
-# TunnelFight
+# Tunnel Fight
 Implementação de um jogo estilo Beat 'em up utilizando Python e o framework <a href="http://www2.ic.uff.br/pplay/">PPlay</a>. 
 
 O jogo acontece em rodadas e a cada rodada que se passa o número de inimigos é aumentado. 
